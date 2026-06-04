@@ -3,7 +3,7 @@
 **A Minor Project Report Submission**
 
 ![SereneMind Logo](logo.png) >
-> * **Course:** [Bachelors in Comouter Engineering]
+> * **Course:** [Bachelors in Computer Engineering]
 > * **Semester/Year:** [6th Semester, 3rd Year]
 > * **University/College:** [Kathmandu Engineering College]
 > * **Submission Date:** [2026]
@@ -21,10 +21,10 @@
 
 ---
 
-## 📑 Abstract
+##   Abstract
 In today's fast-paced world, mental health monitoring is crucial. **SereneMind** is a conceptual full stack web application developed as a minor project to address the need for an accessible, intuitive, and stigma-free mental health tracking tool. The system provides a calming user interface (UI) and smooth user experience (UX) to help users log daily moods, maintain private journal reflections, and access quick mindfulness tools. 
 
-## 🎯 Project Objectives
+## Project Objectives
 1. **Design a Calming UI/UX:** To develop a front-end interface utilizing color psychology (soft greens and off-whites) to promote user relaxation.
 2. **Implement Mood Tracking:** To create an interactive daily wellness snapshot for users to log their emotional state.
 3. **Develop a Reflective Journaling System:** To build a structured, distraction-free environment for user journaling and self-reflection.
@@ -32,7 +32,7 @@ In today's fast-paced world, mental health monitoring is crucial. **SereneMind**
 
 ---
 
-## 🌟 Key Features
+##   Key Features
 
 * **Daily Wellness Snapshot:** Interactive emoji-based mood tracker.
 * **Journal Feed & Entry Interface:** A dedicated space to view past entries and a full-page, distraction-free environment for writing new reflections with tagging capabilities.
@@ -42,7 +42,7 @@ In today's fast-paced world, mental health monitoring is crucial. **SereneMind**
 
 ---
 
-## 🛠️ Technology Stack (Front-End)
+##  Technology Stack (Front-End)
 
 * **HTML5:** For semantic structure and content mapping.
 * **Tailwind CSS (via CDN):** For rapid, utility-first styling and responsive layout management.
@@ -55,7 +55,7 @@ In today's fast-paced world, mental health monitoring is crucial. **SereneMind**
 
 ---
 
-## 🚀 How to Run the Project Locally
+## How to Run the Project Locally
 
 Because this phase of the project focuses on UI/UX and front-end development, no backend server setup is required.
 
