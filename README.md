@@ -2,7 +2,7 @@
 # SereneMind: Intelligent Mental Health Monitoring System
 **A Minor Project Report Submission**
 
-![SereneMind Logo](image_4d75ee.jpg) >
+![SereneMind Logo](logo.png) >
 > * **Course:** [Bachelors in Comouter Engineering]
 > * **Semester/Year:** [6th Semester, 3rd Year]
 > * **University/College:** [Kathmandu Engineering College]
