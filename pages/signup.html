@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneMind Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    
+    <div class="login-card" style="height: auto; min-height: 600px; margin: 20px 0;">
+        <div class="left-panel" style="min-height: 600px;">
+            <div class="logo">
+                <img src="../assets/images/logo2.png" class="logo" alt="SereneMind Logo">
+            </div>
+            <h3>Your personal space for mental well-being and clarity.</h3>
+            
+            <img src="../assets/images/meditation.png" class="illustration" alt="Meditation Illustration">
+
+            <div class="bottom-curve"></div>
+            
+            <div class="trust-badge">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                </svg>
+                <p>End-to-end encrypted<br>and 100% private</p>
+            </div>
+        </div>
+
+        <div class="right-panel" style="padding: 40px 70px;">
+            <h2>Create Account</h2>
+            <p>Join SereneMind to begin tracking and improving your mental well-being.</p>
+            
+            <form id="signupForm">
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-wrapper">
+                        <svg class="left-icon" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <input type="text" id="fullName" placeholder="Abisha Dhungel" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <svg class="left-icon" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <input type="email" id="email" placeholder="abisha@example.com" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <svg class="left-icon" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                        </svg>
+                        <input type="password" id="password" placeholder="Create a strong password" required>
+                        <svg class="toggle-password" id="togglePassword" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <svg class="left-icon" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                        </svg>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                        <svg class="toggle-password" id="toggleConfirmPassword" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn">Sign Up</button>
+                
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button type="button" class="google-btn" id="triggerGoogleModal">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.69c-.29 1.5-.14 2.5-.94 3.53v2.93h1.51c4.95-4.56 7.48-10.74 7.48-16.31z"/>
+                        <path fill="#34A853" d="M12 24c3.24 0 5.97-1.08 7.96-2.93l-3.88-3.01c-1.08.72-2.47 1.15-4.08 1.15-3.14 0-5.8-2.12-6.75-4.97H1.64v3.03C3.62 21.24 7.56 24 12 24z"/>
+                        <path fill="#FBBC05" d="M5.25 14.24c-.25-.72-.39-1.49-.39-2.24s.14-1.52.39-2.24V6.73H1.64C.6 8.81 0 11.14 0 12.5s.6 3.69 1.64 5.77l3.61-3.03z"/>
+                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.44-3.44C17.96 1.19 15.24 0 12 0 7.56 0 3.62 2.76 1.64 6.73l3.61 3.03c.95-2.85 3.61-4.97 6.75-4.97z"/>
+                    </svg>
+                    Continue with Google
+                </button>
+            </form>
+
+            <div class="signup-text">
+                Already have an account? <a href="./login.html">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Data Privacy Agreement Modal Overlay -->
+    <div class="modal-overlay" id="termsOverlay">
+        <div class="modal-card terms-modal">
+            <div class="terms-header">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                </svg>
+                <h3>Data Privacy & Agreement</h3>
+            </div>
+            
+            <p class="terms-intro">To protect your mental wellness journey and keep your details secure, please review and accept our data security standards.</p>
+            
+            <div class="terms-content">
+                <div class="terms-section-title">1. Zero Plaintext Leakage</div>
+                <p>SereneMind is built with privacy at its core. All written logs, mood tracker variables, and custom notes are stored locally in your browser's sandboxed environment or processed through fully encrypted pipelines. No plaintext information is transmitted to external database systems.</p>
+                
+                <div class="terms-section-title">2. End-to-End Cryptographic Security</div>
+                <p>When syncing data or requesting conceptual LLM assistance, personal identifiers are obfuscated and payload data is encrypted client-side using industry-standard advanced cryptography before hitting the server. Only you hold the decryption authority.</p>
+                
+                <div class="terms-section-title">3. Absolute Ownership & No Ad Tracking</div>
+                <p>We believe your mental health reflections are sacred. SereneMind enforces a strict zero-data-monetization policy. Your activity, mood indexes, and diagnostic telemetry are never tracked, aggregated, or shared with third-party advertisers or data brokers.</p>
+                
+                <div class="terms-section-title">4. Conversational Integrity</div>
+                <p>Your dialogue with the SereneMind Chatbot helper runs over transient sessions with zero-retention parameters, ensuring that the guidance and prompts provided remain completely confidential.</p>
+            </div>
+
+            <div class="agreement-checkboxes">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="agreeSecurityPolicy">
+                    <span>I understand that my mental health logs are fully secure, end-to-end encrypted, and private.</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="agreeTermsOfService">
+                    <span>I agree to the Terms of Service and Privacy Policy.</span>
+                </label>
+            </div>
+
+            <div class="terms-actions">
+                <button type="button" class="terms-btn decline-btn" id="declineTerms">Decline</button>
+                <button type="button" class="terms-btn accept-btn" id="acceptTerms" disabled>Accept & Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Login Email Entry Modal Overlay (Maintains parity with login.html) -->
+    <div class="modal-overlay" id="googleDemoModal">
+        <div class="modal-card">
+            <h3>Enter Google Email</h3>
+            <p>Please select: Enter Google Email</p>
+            <input type="email" id="demoEmailInput" class="modal-input" placeholder="abisha@email.com">
+            <button type="button" class="modal-submit-btn" id="submitDemoEmail">Submit</button>
+        </div>
+    </div>
+
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+    
+    <script src="../assets/js/signup.js"></script>
+</body>
+</html>

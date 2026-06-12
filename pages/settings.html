@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - SereneMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+
+        <link rel="stylesheet" href="../assets/css/settings.css">
+</head>
+<body>
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+            <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item active"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget" style="margin-top: auto; margin-bottom: 15px;">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Account Settings</h1>
+                <p>Manage your profile and preferences.</p>
+            </header>
+
+            <div class="cards-grid">
+                
+                <div class="card">
+                    <div class="card-header">
+                        <i class="ph ph-user"></i>
+                        <h2>Profile Information</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-user icon-left"></i>
+                            <input type="text" value="Abisha Dhungel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-envelope-simple icon-left"></i>
+                            <input type="email" value="abisha@gmail.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-at icon-left"></i>
+                            <input type="text" value="abisha">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <i class="ph ph-lock-key"></i>
+                        <h2>Security</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-lock-key icon-left"></i>
+                            <input type="password" placeholder="Enter current password" class="pwd-input">
+                            <i class="ph ph-eye icon-right toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-lock-key icon-left"></i>
+                            <input type="password" placeholder="Enter new password" class="pwd-input">
+                            <i class="ph ph-eye icon-right toggle-password"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="ph ph-lock-key icon-left"></i>
+                            <input type="password" placeholder="Confirm new password" class="pwd-input">
+                            <i class="ph ph-eye icon-right toggle-password"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-full-width">
+                    <div class="card-header">
+                        <i class="ph ph-faders"></i>
+                        <h2>Preferences</h2>
+                    </div>
+
+                    <div class="preferences-content">
+                        <div class="pref-column">
+                            <div class="pref-row">
+                                <div class="pref-info">
+                                    <h3>Email Notifications</h3>
+                                    <p>Receive updates and reminders via email</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="pref-row" style="margin-top: 25px;">
+                                <div class="pref-info">
+                                    <h3>Dark Mode</h3>
+                                    <p>Enable dark mode for the application</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="pref-column">
+                            <div class="pref-info">
+                                <h3>Reminder Frequency</h3>
+                                <p>Choose how often to receive check-in prompts</p>
+                            </div>
+                            <div class="input-wrapper select-wrapper">
+                                <i class="ph ph-bell icon-left"></i>
+                                <select id="reminderFrequency">
+                                    <option value="once">Once daily</option>
+                                    <option value="twice">Twice daily</option>
+                                    <option value="three">Three times daily</option>
+                                    <option value="none">None (Self-guided)</option>
+                                </select>
+                                <i class="ph ph-caret-down icon-right" style="pointer-events: none;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-delete">
+                    <i class="ph ph-trash"></i> Delete Account
+                </button>
+                <button class="btn btn-save">
+                    <i class="ph ph-check"></i> Save Changes
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+        <script src="../assets/js/settings.js"></script>
+</body>
+</html>

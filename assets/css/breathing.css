@@ -1,0 +1,541 @@
+:root {
+    --primary: #58876c;
+    --primary-hover: #4a745c;
+    --bg-body: #f4f9f6;
+    --bg-card: #ffffff;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    
+    /* Breathing Ring Colors */
+    --ring-outer-bg: rgba(88, 135, 108, 0.08);
+    --ring-middle-bg: rgba(88, 135, 108, 0.15);
+    --ring-inner-bg: #ffffff;
+    --ring-shadow: rgba(88, 135, 108, 0.2);
+}
+
+html.dark-mode {
+    --bg-body: #121813;
+    --bg-card: #1e291f;
+    --text-dark: #eff3f0;
+    --text-muted: #94a3b8;
+    --border-color: #324433;
+    
+    /* Breathing Ring Colors Dark */
+    --ring-outer-bg: rgba(88, 135, 108, 0.05);
+    --ring-middle-bg: rgba(88, 135, 108, 0.12);
+    --ring-inner-bg: #28372a;
+    --ring-shadow: rgba(88, 135, 108, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Plants decoration matching other subpages */
+.bg-pot {
+    position: fixed;
+    bottom: -10px;
+    left: -150px;
+    height: 300px;
+    width: auto;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bg-plants {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 75vh;
+    max-height: 800px;
+    z-index: 1;
+    object-fit: contain;
+    transform: translateX(10%);
+    mix-blend-mode: multiply;
+}
+
+html.dark-mode .bg-plants {
+    mix-blend-mode: normal;
+    opacity: 0.15;
+}
+
+/* Page Layout */
+.dashboard-container {
+    width: 1100px;
+    height: 85vh;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    display: flex;
+    overflow: hidden;
+    z-index: 10;
+    position: relative;
+}
+
+html.dark-mode .dashboard-container {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar Layout */
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+    height: 100%;
+}
+
+.brand {
+    text-align: center;
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.brand img {
+    width: 170px;
+    height: auto;
+    margin-bottom: 8px;
+}
+
+.menu {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.menu-item {
+    padding: 10px 20px;
+    margin: 4px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text-dark);
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.menu-item i {
+    width: 20px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-right: 8px;
+}
+
+.menu-item:hover {
+    background-color: var(--ring-outer-bg);
+}
+
+.menu-item.active {
+    background-color: var(--ring-middle-bg);
+    color: var(--primary);
+    position: relative;
+}
+
+.menu-item.active i {
+    color: var(--primary);
+}
+
+.menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 10%;
+    height: 80%;
+    width: 4px;
+    background-color: var(--primary);
+    border-radius: 0 5px 5px 0;
+}
+
+.sidebar-bottom-widget {
+    margin: 12px;
+    background-color: var(--ring-outer-bg);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-bottom-widget .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.sidebar-bottom-widget .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.widget-text h4 {
+    font-size: 0.65rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.widget-text p {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    padding: 25px 35px;
+    background-color: var(--bg-card);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Custom scrollbar for main content */
+.main-content::-webkit-scrollbar {
+    width: 6px;
+}
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+.main-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+html.dark-mode .main-content::-webkit-scrollbar-thumb {
+    background: #324433;
+}
+
+html.dark-mode .main-content {
+    background-color: #1a241b;
+}
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.page-title p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Breathing Card Content */
+.breathing-card {
+    background-color: var(--bg-card);
+    border-radius: 24px;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.05), 0 5px 15px -5px rgba(0, 0, 0, 0.01);
+    border: 1px solid var(--border-color);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Settings selection styling */
+.settings-panel {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setting-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.setting-group select {
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-dark);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 0 12px;
+    outline: none;
+    cursor: pointer;
+    text-align-last: center;
+    transition: border-color 0.2s;
+}
+
+.setting-group select:focus {
+    border-color: var(--primary);
+}
+
+/* Breathing Visualization */
+.visualization-area {
+    margin: 15px 0 25px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+}
+
+.breathing-ring-wrapper {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Outer, Middle and Inner Rings with absolute coordinates */
+.breathing-ring-outer,
+.breathing-ring-middle,
+.breathing-ring-inner {
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 4000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.breathing-ring-outer {
+    width: 190px;
+    height: 190px;
+    background-color: var(--ring-outer-bg);
+    z-index: 1;
+}
+
+.breathing-ring-middle {
+    width: 150px;
+    height: 150px;
+    background-color: var(--ring-middle-bg);
+    z-index: 2;
+}
+
+.breathing-ring-inner {
+    width: 110px;
+    height: 110px;
+    background-color: var(--ring-inner-bg);
+    box-shadow: 0 10px 20px -5px var(--ring-shadow);
+    z-index: 3;
+}
+
+.instruction-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 2px;
+    transition: color 0.3s;
+}
+
+.timer-display {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Interactive Animation States */
+.breathing-ring-wrapper.inhale .breathing-ring-outer {
+    transform: scale(1.35);
+    background-color: rgba(88, 135, 108, 0.12);
+}
+
+.breathing-ring-wrapper.inhale .breathing-ring-middle {
+    transform: scale(1.25);
+    background-color: rgba(88, 135, 108, 0.25);
+}
+
+.breathing-ring-wrapper.inhale .breathing-ring-inner {
+    transform: scale(1.15);
+    box-shadow: 0 15px 35px var(--ring-shadow);
+}
+
+/* Hold state includes a gentle pulse */
+.breathing-ring-wrapper.hold .breathing-ring-outer {
+    transform: scale(1.35);
+    animation: gentlePulse 2s infinite ease-in-out;
+}
+
+.breathing-ring-wrapper.hold .breathing-ring-middle {
+    transform: scale(1.25);
+}
+
+.breathing-ring-wrapper.hold .breathing-ring-inner {
+    transform: scale(1.15);
+}
+
+.breathing-ring-wrapper.exhale .breathing-ring-outer,
+.breathing-ring-wrapper.exhale .breathing-ring-middle,
+.breathing-ring-wrapper.exhale .breathing-ring-inner {
+    transform: scale(1);
+}
+
+@keyframes gentlePulse {
+    0%, 100% { transform: scale(1.35); opacity: 0.9; }
+    50% { transform: scale(1.38); opacity: 1; }
+}
+
+/* Controls Panel */
+.controls-panel {
+    display: flex;
+    gap: 16px;
+    z-index: 15;
+}
+
+.control-btn {
+    height: 48px;
+    padding: 0 30px;
+    border-radius: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.control-btn.play-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(88, 135, 108, 0.2);
+}
+
+.control-btn.play-btn:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 6px 16px rgba(88, 135, 108, 0.3);
+}
+
+.control-btn.reset-btn {
+    background-color: transparent;
+    border: 1.5px solid var(--border-color);
+    color: var(--text-dark);
+}
+
+.control-btn.reset-btn:hover:not(:disabled) {
+    background-color: var(--ring-outer-bg);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.control-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+
+/* Completion Banner Overlay (fades in when session is finished) */
+.completion-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-card);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.completion-message.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.completion-message .icon-badge {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.completion-message h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+}
+
+.completion-message p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 420px;
+    margin-bottom: 30px;
+}
+
+.return-btn {
+    height: 46px;
+    padding: 0 32px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 23px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.return-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+    .main-content {
+        padding: 30px 20px;
+    }
+    .bg-pot, .bg-plants {
+        display: none;
+    }
+}

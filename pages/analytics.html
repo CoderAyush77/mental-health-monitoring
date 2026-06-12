@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneMind Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../assets/css/analytics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+            <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item active"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Mood Analytics</h1>
+                <p>Track and understand your emotional well-being.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon-circle">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Average Mood</h3>
+                        <div class="value">72%</div>
+                        <div class="sub-text">Good</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon-circle">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Journals</h3>
+                        <div class="value" style="color: #1a202c;">18</div>
+                        <div class="sub-text">Entries</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="icon-circle">
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Best Mood Day</h3>
+                        <div class="value" style="color: #1a202c;">Saturday</div>
+                        <div class="sub-text star-sub"><i class="fa-solid fa-star"></i> Highest Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <h3>Weekly Mood Trend</h3>
+                    </div>
+                    <div class="chart-sub-text">
+                       <canvas id="weeklymood" height="280"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <h3>Weekly Average Mood</h3>
+                    </div>
+                    <div class="chart-sub-text">
+                       <canvas id="weeklyavg" height="280"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+
+    const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    const moodScores = [65,72,68,80,76,90,85];
+    const weeklyAvg = [62,70,75,81];
+
+    // Weekly Mood Trend
+
+    new Chart(
+      document.getElementById("weeklymood"),
+      {
+        type: "line",
+        data: {
+          labels: days,
+          datasets: [{
+            label: "Mood Score",
+            data: moodScores,
+            borderColor: '#527b60',
+            backgroundColor: 'rgba(82, 123, 96, 0.15)',
+
+            pointBackgroundColor: '#527b60',
+            pointBorderColor: '#527b60',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      }
+    );
+
+    // Weekly Average Mood
+
+    new Chart(
+      document.getElementById("weeklyavg"),
+      {
+        type: "bar",
+        data: {
+          labels: [
+            "Week 1",
+            "Week 2",
+            "Week 3",
+            "Week 4"
+          ],
+          datasets: [{
+            label: "Average Mood",
+            data: weeklyAvg,
+            backgroundColor: 'rgba(82, 123, 96, 0.8)',
+            borderColor: '#527b60',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      }
+    );
+
+    // Journal Activity
+
+
+  </script>
+
+</body>
+</html>

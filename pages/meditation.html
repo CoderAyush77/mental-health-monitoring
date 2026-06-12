@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneMind - Guided Meditation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/meditation.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+            <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget" style="margin-top: auto; margin-bottom: 15px;">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="page-title">
+                <h1>Guided Meditation</h1>
+                <p>Select a soundscape, set your duration, and let the ambient tones guide you into deep relaxation.</p>
+            </div>
+
+            <div class="meditation-card">
+                
+                <!-- Duration and Settings -->
+                <div class="settings-bar">
+                    <div class="setting-group">
+                        <label for="durationSelect"><i class="fa-regular fa-clock"></i> Session Duration</label>
+                        <select id="durationSelect">
+                            <option value="180">3 Minutes</option>
+                            <option value="300">5 Minutes</option>
+                            <option value="600">10 Minutes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Soundscapes Selection Grid -->
+                <div class="tracks-grid">
+                    <div class="track-card active" data-track="serenity">
+                        <div class="track-badge">🌅</div>
+                        <h3>Morning Serenity</h3>
+                        <p>Warm, ambient synthesizer pads designed to gently ground your thoughts.</p>
+                    </div>
+                    <div class="track-card" data-track="ocean">
+                        <div class="track-badge">🌊</div>
+                        <h3>Ocean Waves</h3>
+                        <p>Pulsing sea noise generator syncing your brainwaves to natural tides.</p>
+                    </div>
+                    <div class="track-card" data-track="binaural">
+                        <div class="track-badge">🧘</div>
+                        <h3>Deep Mind Scan</h3>
+                        <p>Binaural waves and grounding frequency sweeps to relieve stress.</p>
+                    </div>
+                    <div class="track-card" data-track="soothing">
+                        <div class="track-badge">🎵</div>
+                        <h3>Soothing Melodies</h3>
+                        <p>Zen-like gentle chord progressions and soft ambient chimes.</p>
+                    </div>
+                </div>
+
+                <!-- Main Player Area -->
+                <div class="player-controls">
+                    <div class="visualizer-container" id="visualizer">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <div class="time-container">
+                        <div class="countdown-text" id="countdownLabel">03:00</div>
+                        <p class="track-status" id="trackStatus">Select a track and press play</p>
+                    </div>
+
+                    <!-- Volume slider & Buttons -->
+                    <div class="player-buttons-wrapper">
+                        <button class="player-btn action-btn" id="playPauseBtn">
+                            <i class="fa-solid fa-play" id="playIcon"></i> Play
+                        </button>
+                        <button class="player-btn stop-btn" id="stopBtn" disabled>
+                            <i class="fa-solid fa-stop"></i> Stop
+                        </button>
+                    </div>
+
+                    <div class="volume-container">
+                        <i class="fa-solid fa-volume-low"></i>
+                        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </div>
+                </div>
+
+                <!-- Completion overlay panel -->
+                <div class="completion-message" id="completionBanner">
+                    <div class="icon-badge">🍃</div>
+                    <h3>Peaceful mind, happy life</h3>
+                    <p>You completed your guided meditation session. Keep carrying this peaceful energy with you throughout the day.</p>
+                    <button class="return-btn" onclick="window.location.href='../index.html'">Return to Dashboard</button>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../assets/js/meditation.js"></script>
+</body>
+</html>

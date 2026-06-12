@@ -1,0 +1,429 @@
+:root {
+            --primary-green: #638666;
+            --primary-green-light: #eef2ef;
+            --text-main: #1a202c;
+            --text-muted: #718096;
+            --bg-color: #f4f7f6; 
+            --border-color: #edf2f7;
+            --danger-red: #dc2626;
+            --danger-red-light: #fef2f2;
+            --danger-red-border: #f87171;
+            --white: #ffffff;
+            --shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        html.dark-mode {
+            --bg-color: #121813;
+            --white: #1e291f;
+            --text-main: #eff3f0;
+            --text-muted: #94a3b8;
+            --border-color: #324433;
+            --shadow: 0 15px 40px rgba(0,0,0,0.3);
+            --primary-green-light: #2c3e2d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden; 
+        }
+
+        /* --- Background Decor Elements --- */
+        .bg-pot {
+            position: fixed; 
+            bottom: -10px; 
+            left: -150px;   
+            height: 300px; 
+            width: auto;   
+            z-index: -1;   
+            pointer-events: none; 
+        }
+
+        .bg-plants {
+            position: fixed; top: 0; right: 0;
+            height: 75vh; max-height: 800px; z-index: -1;
+            object-fit: contain; transform: translateX(10%);
+            mix-blend-mode: multiply;
+        }
+
+        /* Main Container */
+        .dashboard-container {
+            display: flex;
+            background-color: var(--white);
+            width: 1100px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            z-index: 10; 
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 240px; 
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 25px 0; 
+            background: var(--white);
+        }
+
+        .brand {
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 25px; 
+        }
+
+        .brand img { 
+            width: 170px; 
+            height: auto; 
+            margin-bottom: 8px; 
+        }
+
+        .menu {
+            list-style: none;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .menu-item {
+            padding: 10px 20px; 
+            margin: 4px 12px; 
+            border-radius: 10px;
+            cursor: pointer;
+            color: #4a5568;
+            font-size: 0.8rem; 
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+            margin-right: 8px;
+        }
+
+        .menu-item:hover {
+            background-color: #f7fafc;
+        }
+
+        .menu-item.active {
+            background-color: var(--primary-green-light); 
+            color: var(--primary-green); 
+            position: relative;
+        }
+
+        .menu-item.active i {
+            color: var(--primary-green); 
+        }
+
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 10%;
+            height: 80%;
+            width: 4px;
+            background-color: var(--primary-green); 
+            border-radius: 0 5px 5px 0;
+        }
+
+        .sidebar-bottom-widget {
+            margin: 12px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: calc(100% - 24px);
+        }
+
+        .sidebar-bottom-widget .avatar {
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary-green-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+        }
+
+        .sidebar-bottom-widget .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .widget-text h4 {
+            font-size: 0.65rem;
+            color: var(--primary-green); 
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .widget-text p {
+            font-size: 0.55rem;
+            color: #a0aec0;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            flex: 1;
+            padding: 35px 45px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 1.5rem; 
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            font-size: 0.8rem; 
+            color: var(--text-muted);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px; 
+            margin-bottom: 25px;
+        }
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card-full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-header i {
+            font-size: 18px;
+            color: var(--primary-green);
+            margin-right: 8px;
+        }
+
+        .card-header h2 {
+            font-size: 14px; 
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px; 
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            height: 40px; 
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0 36px; 
+            font-size: 13px; 
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s ease;
+            appearance: none; 
+            background-color: var(--white);
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: var(--primary-green);
+        }
+
+        .input-wrapper .icon-left {
+            position: absolute;
+            left: 12px;
+            font-size: 16px; 
+            color: var(--text-muted);
+        }
+
+        .input-wrapper .icon-right {
+            position: absolute;
+            right: 12px;
+            font-size: 16px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        /* Preferences Section Specifics */
+        .preferences-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .pref-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .pref-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .pref-info h3 {
+            font-size: 13px; 
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 3px;
+        }
+
+        .pref-info p {
+            font-size: 11px; 
+            color: var(--text-muted);
+        }
+
+        /* Custom Toggle Switch */
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 40px; 
+            height: 22px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+            border-radius: 22px;
+        }
+
+        .logo { width: 220px; height: auto; margin-bottom: 8px; }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-green);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        .select-wrapper {
+            margin-top: 10px;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px; 
+            padding: 0 20px;
+            border-radius: 6px;
+            font-size: 13px; 
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn i {
+            margin-right: 6px;
+            font-size: 16px;
+        }
+
+        .btn-delete {
+            background-color: var(--white);
+            color: var(--danger-red);
+            border: 1px solid var(--danger-red-border);
+        }
+
+        .btn-delete:hover {
+            background-color: var(--danger-red-light);
+        }
+
+        .btn-save {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }

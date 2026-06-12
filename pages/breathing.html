@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneMind - Breathing Exercise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/breathing.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+            <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget" style="margin-top: auto; margin-bottom: 15px;">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="page-title">
+                <h1>Breathing Exercise</h1>
+                <p>Take a moment to center yourself. Follow the guide to sync your breathing and release tension.</p>
+            </div>
+
+            <div class="breathing-card">
+                
+                <div class="settings-panel">
+                    <div class="setting-group">
+                        <label for="durationSelect"><i class="fa-regular fa-clock"></i> Select Session Duration</label>
+                        <select id="durationSelect">
+                            <option value="60">1 Minute</option>
+                            <option value="120">2 Minutes</option>
+                            <option value="300">5 Minutes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="visualization-area">
+                    <div class="breathing-ring-wrapper">
+                        <!-- Calming circular animations will be styled in CSS -->
+                        <div class="breathing-ring-outer" id="ringOuter"></div>
+                        <div class="breathing-ring-middle" id="ringMiddle"></div>
+                        <div class="breathing-ring-inner" id="ringInner">
+                            <div class="instruction-text" id="instructionLabel">Ready</div>
+                            <div class="timer-display" id="timeRemaining">01:00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls-panel">
+                    <button class="control-btn play-btn" id="startPauseBtn">
+                        <i class="fa-solid fa-play" id="playIcon"></i> <span id="btnText">Start</span>
+                    </button>
+                    <button class="control-btn reset-btn" id="resetBtn" disabled>
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                </div>
+
+                <div class="completion-message" id="completionBanner">
+                    <div class="icon-badge">✨</div>
+                    <h3>Well done!</h3>
+                    <p>You successfully completed your mindful breathing session. Your heart rate is lowered and your mind is clear.</p>
+                    <button class="return-btn" onclick="window.location.href='../index.html'">Back to Dashboard</button>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../assets/js/breathing.js"></script>
+</body>
+</html>

@@ -1,307 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SereneMind Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: {
-                            green: '#638c75', 
-                            light: '#e6f0eb',
-                            bg: '#f4f7f6', 
-                            text: '#2d3748'
-                        }
-                    }
-                }
-            }
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
         }
     </script>
-    <style>
-        body { background-color: #f4f7f6; color: #2d3748; }
-        .card-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-    </style>
 </head>
-<body class="min-h-screen flex flex-col">
 
-  
-    <header class="bg-white px-8 py-4 flex items-center justify-between border-b border-gray-100 z-10">
-       
-        <div class="flex items-center gap-3">
-            <i class="fa-solid fa-tree text-brand-green text-2xl"></i>
-            <span class="text-xl font-semibold tracking-tight text-gray-900">SereneMind</span>
-        </div>
-        
-      
-        <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#" class="bg-brand-light text-brand-green px-4 py-2 rounded-full">Home</a>
-            <a href="#" class="hover:text-brand-green transition-colors">Journal</a>
-            <a href="#" class="hover:text-brand-green transition-colors">Chatbot</a>
-            <a href="#" class="hover:text-brand-green transition-colors">Analytics</a>
-            <a href="#" class="hover:text-brand-green transition-colors">Profile</a>
-            <a href="#" class="hover:text-brand-green transition-colors">Resources</a>
-        </nav>
+<body>
 
-       
-        <div class="flex items-center gap-6">
-            <div class="flex items-center gap-3 text-sm">
-                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 overflow-hidden">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div class="hidden md:block leading-tight">
-                    <p class="text-gray-500 text-xs">Welcome,</p>
-                    <p class="font-semibold text-gray-800">User</p>
-                </div>
+    <img src="assets/images/plants.png" class="bg-leaves" alt="">
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <a href="index.html"><img src="assets/images/logo2.png" alt="SereneMind Logo"></a>
             </div>
-            <button class="border border-gray-300 text-gray-600 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
-                Log Out
-            </button>
-        </div>
-    </header>
 
-    
-    <div class="text-center py-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-            Serene<span class="text-brand-green">Mind</span>
-        </h1>
-        <p class="text-gray-600 text-sm md:text-base">Intelligent Mental Health Monitoring System</p>
-    </div>
-
-    
-    <main class="flex-1 max-w-[1440px] mx-auto w-full px-4 lg:px-8 pb-12 flex flex-col lg:flex-row gap-6">
-        
-        
-        <aside class="w-full lg:w-64 bg-white rounded-2xl p-4 card-shadow flex flex-col relative h-[max-content]">
-            <nav class="flex flex-col gap-2 relative z-10">
-                <a href="#" class="flex items-center justify-between bg-brand-green text-white px-4 py-3 rounded-xl text-sm font-medium">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-house w-5"></i> Dashboard
-                    </div>
-                    <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">Active</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-regular fa-pen-to-square w-5"></i> New Entry
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-solid fa-clock-rotate-left w-5"></i> Journal History
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-regular fa-comments w-5"></i> AI Chatbot
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-solid fa-chart-line w-5"></i> Stress Trends
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-solid fa-gear w-5"></i> Settings
-                </a>
-                <a href="#" class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 px-4 py-3 rounded-xl text-sm font-medium transition-colors">
-                    <i class="fa-regular fa-circle-question w-5"></i> Help
-                </a>
+            <nav class="nav">
+                <a href="index.html" class="active"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
+                <a href="pages/analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+                <a href="pages/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="pages/login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout</a>
             </nav>
-            
-            <div class="mt-12 flex justify-center opacity-70">
-                <i class="fa-brands fa-pagelines text-6xl text-green-200"></i>
+
+            <div class="meditation-card">
+                <div class="meditation-img-wrapper">
+                    <img src="assets/images/med.png" alt="Meditating Person" class="meditation-img">
+                </div>
+                <div class="meditation-text">
+                    <h3>Take a deep breath</h3>
+                    <p>You're doing great!</p>
+                </div>
             </div>
         </aside>
 
-        
-        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-           
-            <div class="flex flex-col gap-6">
-                
-                <div class="bg-white rounded-2xl p-6 card-shadow">
-                    <h3 class="font-bold text-gray-800 text-lg mb-6">Daily Wellness Snapshot</h3>
-                    <p class="text-center text-gray-500 text-sm mb-4">Mood Tracker</p>
-                    
-                    <div class="flex justify-between items-center mb-8 px-2">
-                        
-                        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="selectMood(this)">
-                            <div class="mood-icon w-10 h-10 rounded-full bg-red-400 flex items-center justify-center text-xl shadow-sm border-2 border-transparent ring-2 ring-red-200 scale-110 opacity-100 transition-all duration-200">☹️</div>
-                            <span class="text-xs text-gray-500">Sad</span>
-                        </div>
-                        
-                        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="selectMood(this)">
-                            <div class="mood-icon w-10 h-10 rounded-full bg-orange-300 flex items-center justify-center text-xl shadow-sm border-2 border-transparent opacity-50 hover:opacity-80 transition-all duration-200">😕</div>
-                            <span class="text-xs text-transparent">Confused</span>
-                        </div>
-                        
-                        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="selectMood(this)">
-                            <div class="mood-icon w-10 h-10 rounded-full bg-yellow-200 flex items-center justify-center text-xl shadow-sm border-2 border-transparent opacity-50 hover:opacity-80 transition-all duration-200">😐</div>
-                            <span class="text-xs text-transparent">Neutral</span>
-                        </div>
-                        
-                        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="selectMood(this)">
-                            <div class="mood-icon w-10 h-10 rounded-full bg-green-200 flex items-center justify-center text-xl shadow-sm border-2 border-transparent opacity-50 hover:opacity-80 transition-all duration-200">🙂</div>
-                            <span class="text-xs text-transparent">Good</span>
-                        </div>
-                        
-                        <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="selectMood(this)">
-                            <div class="mood-icon w-10 h-10 rounded-full bg-green-400 flex items-center justify-center text-xl shadow-sm border-2 border-transparent opacity-50 hover:opacity-80 transition-all duration-200">😀</div>
-                            <span class="text-xs text-gray-500 transition-opacity duration-200 opacity-100">Happy</span>
-                        </div>
-                    </div>
-                    
-                    <p class="text-center text-gray-700 font-medium mb-6">How are you feeling today?</p>
-                    <button class="w-full bg-brand-green text-white py-3 rounded-xl font-medium hover:bg-opacity-90 transition-all">
-                        Check-in
-                    </button>
+        <main class="content">
+
+            <header class="topbar">
+                <div class="brand"><a href="index.html" style="text-decoration: none; color: inherit;">SereneMind</a>
                 </div>
+                <div class="top-right">
+                    <div class="stat">
+                        <div class="stat-icon">💧</div>
+                        <div class="stat-info">
+                            <h4>Daily Goal</h4>
+                            <p>6 / 10</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h4>Streak</h4>
+                            <p>7 Days</p>
+                        </div>
+                    </div>
+                    <a href="pages/settings.html" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="user">
+                            <div class="user-avatar">👤</div>
+                            <div class="user-info">
+                                <small>Good Afternoon,</small>
+                                <strong>User</strong>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </header>
 
-                
-                <div class="bg-white rounded-2xl p-6 card-shadow flex-1">
-                    <h3 class="font-bold text-gray-800 text-lg mb-4">AI Chatbot Assistant</h3>
-                    
-                    <div class="bg-brand-green rounded-t-xl rounded-bl-xl p-3 text-white text-sm mb-3 flex items-start gap-3 relative">
-                        <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-tree"></i></div>
-                        <p class="pt-0.5">Ask SereneMind</p>
-                        <button class="absolute top-3 right-3 text-white/70 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <div class="main-grid">
+
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Daily Wellness Snapshot</h2>
+                        <div class="pill">📅 Today</div>
                     </div>
 
-                    <div class="flex items-start gap-3 mb-6 px-2">
-                        <div class="w-6 h-6 bg-brand-light text-brand-green rounded-full flex items-center justify-center text-xs shrink-0"><i class="fa-solid fa-tree"></i></div>
-                        <div class="bg-gray-50 rounded-2xl rounded-tl-none p-3 text-sm text-gray-600 border border-gray-100">
-                            Ask you or feeling thas?
+                    <div class="question">How are you feeling today?</div>
+
+                    <div class="moods">
+                        <div class="mood">
+                            <div class="mood-emoji">☹️</div>
+                            <p>Sad</p>
+                        </div>
+                        <div class="mood">
+                            <div class="mood-emoji">😐</div>
+                            <p>Neutral</p>
+                        </div>
+                        <div class="mood">
+                            <div class="mood-emoji">🙂</div>
+                            <p>Calm</p>
+                        </div>
+                        <div class="mood selected">
+                            <div class="mood-emoji">😃</div>
+                            <p>Happy</p>
+                        </div>
+                        <div class="mood">
+                            <div class="mood-emoji">🤩</div>
+                            <p>Very Happy</p>
                         </div>
                     </div>
 
-                    <div class="relative mt-auto">
-                        <input type="text" placeholder="Ask SereneMind..." class="w-full border border-gray-200 rounded-full py-3 pl-4 pr-12 text-sm focus:outline-none focus:border-brand-green">
-                        <button class="absolute right-2 top-1.5 w-9 h-9 bg-brand-green text-white rounded-full flex items-center justify-center">
-                            <i class="fa-solid fa-paper-plane text-xs"></i>
-                        </button>
+                    <div class="feedback-box">
+                        <h4>🌿 Great choice! 😉</h4>
+                        <p>Your positive mindset can make today amazing.</p>
                     </div>
-                </div>
+
+                    <button class="check-btn"><i class="fa-solid fa-circle-check"></i> Check-in</button>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Mood Trend (This Week)</h2>
+                        <a href="pages/analytics.html"
+                            style="text-decoration: none; color: #597858; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">View
+                            Analytics <i class="fa-solid fa-arrow-right" style="font-size: 11px;"></i></a>
+                    </div>
+
+                    <div class="chart-container">
+                        <svg class="chart-svg" viewBox="0 0 700 180" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="trendGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#597858" stop-opacity="0.3" />
+                                    <stop offset="100%" stop-color="#597858" stop-opacity="0.0" />
+                                </linearGradient>
+                            </defs>
+
+                            <line x1="0" y1="0" x2="700" y2="0" stroke="#f0f0f0" stroke-width="1" />
+                            <line x1="0" y1="45" x2="700" y2="45" stroke="#f0f0f0" stroke-width="1" />
+                            <line x1="0" y1="90" x2="700" y2="90" stroke="#f0f0f0" stroke-width="1" />
+                            <line x1="0" y1="135" x2="700" y2="135" stroke="#f0f0f0" stroke-width="1" />
+                            <line x1="0" y1="180" x2="700" y2="180" stroke="#f0f0f0" stroke-width="1" />
+
+                            <path d="M 35,110 L 140,95 L 245,60 L 350,75 L 455,30 L 560,15 L 665,0 L 665,180 L 35,180 Z"
+                                fill="url(#trendGradient)" />
+
+                            <path d="M 35,110 L 140,95 L 245,60 L 350,75 L 455,30 L 560,15 L 665,0" fill="none"
+                                stroke="#597858" stroke-width="3" />
+
+                            <circle cx="35" cy="110" r="4" fill="#597858" />
+                            <text x="35" y="95" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">55</text>
+
+                            <circle cx="140" cy="95" r="4" fill="#597858" />
+                            <text x="140" y="80" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">60</text>
+
+                            <circle cx="245" cy="60" r="4" fill="#597858" />
+                            <text x="245" y="45" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">70</text>
+
+                            <circle cx="350" cy="75" r="4" fill="#597858" />
+                            <text x="350" y="60" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">65</text>
+
+                            <circle cx="455" cy="30" r="4" fill="#597858" />
+                            <text x="455" y="15" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">80</text>
+
+                            <circle cx="560" cy="15" r="4" fill="#597858" />
+                            <text x="560" y="0" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">85</text>
+
+                            <circle cx="665" cy="0" r="4" fill="#597858" />
+                            <text x="665" y="-15" text-anchor="middle" font-size="12" fill="#555"
+                                font-weight="600">90</text>
+                        </svg>
+
+                        <div class="chart-axis">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-stats">
+                        <div class="stat-box">
+                            <span class="label">Average Mood</span>
+                            <div class="value">72 <span class="sub">Good</span></div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Best Day</span>
+                            <div class="value">Sunday <span class="sub">90 ⭐</span></div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Improvement</span>
+                            <div class="value highlight">+35% <span class="sub">vs last week 📈</span></div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
 
-            
-            <div class="flex flex-col gap-6">
-                
-                <div class="bg-white rounded-2xl p-6 card-shadow flex-1 h-fit">
-                    <h3 class="font-bold text-gray-800 text-lg mb-4">Personal Insights</h3>
-                    <div class="bg-brand-light rounded-xl p-4 flex gap-4 items-start border border-green-100/50">
-                        <div class="w-10 h-10 bg-brand-green text-white rounded-full flex items-center justify-center shrink-0 shadow-sm mt-1">
-                            <i class="fa-regular fa-lightbulb"></i>
-                        </div>
-                        <p class="text-sm text-gray-700 leading-relaxed">
-                            Stress elevated this week. Consider mindfulness, and oosisyren on receive form health mindfulness.
-                        </p>
-                    </div>
+            <section class="card journal-history-card" style="padding: 24px; margin-bottom: 24px;">
+                <div class="card-header" style="margin-bottom: 16px;">
+                    <h2 class="card-title" style="font-size: 16px;">Journal History</h2>
+                    <a href="pages/journal.html" class="history-write-link"
+                        style="text-decoration: none; color: var(--primary); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                        Write Entry <i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i>
+                    </a>
                 </div>
+                <div class="journal-history-list" id="journalHistoryList">
+                    <!-- Loaded dynamically via JS -->
+                </div>
+            </section>
+
+            <section class="card" style="padding: 24px;">
+                <h2 class="card-title" style="margin-bottom: 20px; font-size: 16px;">Quick Tools</h2>
+                <div class="tools-grid">
+
+                    <a href="pages/breathing.html" class="tool-card-link">
+                        <div class="tool-card">
+                            <div class="tool-icon">🍃</div>
+                            <div class="tool-info">
+                                <h4>Breathing Exercise</h4>
+                                <p>Calm your mind</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="pages/meditation.html" class="tool-card-link">
+                        <div class="tool-card">
+                            <div class="tool-icon">🌿</div>
+                            <div class="tool-info">
+                                <h4>Guided Meditation</h4>
+                                <p>Find your peace</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="pages/journal.html" class="tool-card-link">
+                        <div class="tool-card">
+                            <div class="tool-icon">📖</div>
+                            <div class="tool-info">
+                                <h4>Journal Entry</h4>
+                                <p>Write your thoughts</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="pages/analytics.html" class="tool-card-link">
+                        <div class="tool-card">
+                            <div class="tool-icon">📊</div>
+                            <div class="tool-info">
+                                <h4>View Analytics</h4>
+                                <p>Track your progress</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Check-in Choice Modal -->
+    <div class="modal-overlay" id="checkinModal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeCheckinModal" aria-label="Close modal">&times;</button>
+            <h3>Daily Check-in</h3>
+            <p>How would you like to reflect today?</p>
+            <div class="modal-choices">
+                <a href="pages/journal.html" class="modal-choice-card">
+                    <div class="choice-icon">📖</div>
+                    <div class="choice-info">
+                        <h4>Write Journal</h4>
+                        <p>Write down your thoughts and feelings</p>
+                    </div>
+                </a>
+                <a href="pages/chatbot.html" class="modal-choice-card">
+                    <div class="choice-icon">💬</div>
+                    <div class="choice-info">
+                        <h4>Chat with Chatbot</h4>
+                        <p>Talk to our supportive AI companion</p>
+                    </div>
+                </a>
             </div>
-
-            
-            <div class="flex flex-col gap-6">
-               
-                <div class="bg-white rounded-2xl p-6 card-shadow">
-                    <h3 class="font-bold text-gray-800 text-lg mb-6">Journal Feed</h3>
-                    <div class="flex justify-between text-xs text-gray-500 mb-4 px-2">
-                        <span>Recent</span>
-                        <span class="mr-6">Tags</span>
-                        <span>Mood</span>
-                    </div>
-
-                    <div class="flex flex-col gap-5 relative border-l-2 border-gray-100 ml-3 pl-5">
-                        <!-- Entry 1 -->
-                        <div class="relative">
-                            <div class="absolute -left-[27px] top-1 w-2.5 h-2.5 rounded-full bg-brand-green ring-4 ring-white"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-semibold text-gray-800 text-sm">Reflection</span>
-                                    <span class="bg-gray-100 text-gray-500 text-[10px] px-2 py-0.5 rounded-full">Oct 25</span>
-                                </div>
-                                <div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs">🙂</div>
-                            </div>
-                            <p class="text-xs text-gray-500 leading-snug">Stressed with work deadlines, even their face and interesting m...</p>
-                        </div>
-                        
-                        
-                        <div class="relative pt-4 border-t border-gray-50">
-                            <div class="absolute -left-[27px] top-5 w-2.5 h-2.5 rounded-full bg-[#4e8cb9] ring-4 ring-white"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-semibold text-gray-800 text-sm">Reflection</span>
-                                    <span class="bg-gray-100 text-gray-500 text-[10px] px-2 py-0.5 rounded-full">Oct 36</span>
-                                </div>
-                                <div class="w-6 h-6 rounded-full bg-yellow-100 flex items-center justify-center text-xs">😐</div>
-                            </div>
-                            <p class="text-xs text-gray-500 leading-snug">Stressed with work deadlines, in each end-noan sensiting and leh...</p>
-                        </div>
-
-                        
-                        <div class="relative pt-4 border-t border-gray-50">
-                            <div class="absolute -left-[27px] top-5 w-2.5 h-2.5 rounded-full bg-red-400 ring-4 ring-white"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-semibold text-gray-800 text-sm">Reflection</span>
-                                    <span class="bg-gray-100 text-gray-500 text-[10px] px-2 py-0.5 rounded-full">Oct 36</span>
-                                </div>
-                                <div class="w-6 h-6 rounded-full bg-yellow-100 flex items-center justify-center text-xs">😐</div>
-                            </div>
-                            <p class="text-xs text-gray-500 leading-snug">Stressed with work deadlines, in and consistent conditiool meas...</p>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="bg-white rounded-2xl p-6 card-shadow flex-1 h-fit">
-                    <h3 class="font-bold text-gray-800 text-lg mb-4">Quick Tools</h3>
-                    <div class="flex flex-col gap-3">
-                        <button class="w-full flex items-center gap-3 bg-brand-light text-gray-700 px-4 py-3 rounded-xl hover:bg-brand-green/20 transition-colors border border-green-100/50">
-                            <i class="fa-solid fa-leaf text-brand-green"></i>
-                            <span class="font-medium text-sm">Breathing Exercise</span>
-                        </button>
-                        <button class="w-full flex items-center gap-3 bg-brand-light text-gray-700 px-4 py-3 rounded-xl hover:bg-brand-green/20 transition-colors border border-green-100/50">
-                            <i class="fa-regular fa-file-lines text-brand-green"></i>
-                            <span class="font-medium text-sm">Quick Journal Entry</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
         </div>
-    </main>
+    </div>
 
-    
-    <script>
-        function selectMood(selectedElement) {
-            // Get all mood icons
-            const allMoods = document.querySelectorAll('.mood-icon');
-            const allLabels = document.querySelectorAll('.group span');
-
-            // Reset all emojis to inactive state
-            allMoods.forEach(icon => {
-                icon.classList.remove('scale-110', 'opacity-100', 'ring-2');
-                icon.classList.add('opacity-50');
-            });
-
-            
-            allLabels.forEach((label, index) => {
-                if(index !== 0 && index !== 4) {
-                    label.classList.add('text-transparent');
-                    label.classList.remove('text-gray-500');
-                }
-            });
-
-            
-            const targetIcon = selectedElement.querySelector('.mood-icon');
-            const targetLabel = selectedElement.querySelector('span');
-            
-            targetIcon.classList.remove('opacity-50');
-            targetIcon.classList.add('scale-110', 'opacity-100', 'ring-2');
-            
-            
-            targetLabel.classList.remove('text-transparent');
-            targetLabel.classList.add('text-gray-500');
-        }
-    </script>
+    <!-- JavaScript Interactions -->
+    <script src="assets/js/index.js"></script>
 </body>
+
 </html>
