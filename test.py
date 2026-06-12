@@ -23,6 +23,7 @@ def predict_stress(text):
     text_vec = vectorizer.transform([text])
 
     X_input = hstack([text_vec, csr_matrix(vader_feats)])
+    print("Compound:",scores["compound"]) 
 
     prediction = model.predict(X_input)
     return prediction[0]
