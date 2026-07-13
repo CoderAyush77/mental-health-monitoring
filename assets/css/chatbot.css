@@ -197,16 +197,22 @@ html.dark-mode .bg-plants {
 /* ================= CHAT CONTAINER ================= */
 .chat-container {
     flex: 1;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(89, 120, 88, 0.15);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
 html.dark-mode .chat-container {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(30, 41, 31, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* Chat Header */
@@ -323,7 +329,21 @@ html.dark-mode .chat-messages::-webkit-scrollbar-thumb {
 /* Message Styles */
 .message {
     display: flex;
-    max-width: 80%;
+    max-width: 85%;
+    animation: slideUpFade 0.4s ease-out forwards;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .message.bot {
@@ -336,26 +356,30 @@ html.dark-mode .chat-messages::-webkit-scrollbar-thumb {
 }
 
 .message-bubble {
-    padding: 12px 18px;
+    padding: 14px 20px;
     border-radius: 20px;
-    font-size: 13.5px;
-    line-height: 1.5;
+    font-size: 14px;
+    line-height: 1.6;
     position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
 }
 
 .message.bot .message-bubble {
     background-color: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     color: var(--text-dark);
     border-top-left-radius: 4px;
 }
 
+html.dark-mode .message.bot .message-bubble {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
 .message.user .message-bubble {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     color: #ffffff;
     border-top-right-radius: 4px;
-    box-shadow: 0 4px 12px rgba(89, 120, 88, 0.15);
+    box-shadow: 0 6px 16px rgba(89, 120, 88, 0.25);
 }
 
 .message-time {
@@ -478,3 +502,398 @@ html.dark-mode .quick-prompts::-webkit-scrollbar-thumb {
 .send-btn:hover {
     background-color: var(--primary-hover);
 }
+
+/* ================= MCQ OPTIONS & RESULTS ================= */
+.mcq-container {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.mcq-btn {
+    width: 100%;
+    background-color: var(--bg-card);
+    border: 1.5px solid var(--border);
+    color: var(--text-dark);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mcq-btn::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--text-light);
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.mcq-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+    transform: translateX(4px);
+}
+
+.mcq-btn:hover:not(:disabled)::before {
+    border-color: var(--primary);
+}
+
+/* Clicked / Selected Option */
+.mcq-btn.mcq-selected {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.mcq-btn.mcq-selected::before {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    box-shadow: inset 0 0 0 3px var(--bg-card);
+}
+
+/* Disabled/Unselected Options */
+.mcq-btn:disabled:not(.mcq-selected) {
+    opacity: 0.55;
+    cursor: not-allowed;
+    border-color: var(--border);
+}
+
+/* Stress Assessment Result Card Styling */
+.assessment-result-card {
+    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(89, 120, 88, 0.05) 100%);
+    border: 1.5px solid var(--primary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 12px;
+    box-shadow: 0 4px 15px rgba(89, 120, 88, 0.08);
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed rgba(89, 120, 88, 0.2);
+    padding-bottom: 12px;
+}
+
+.result-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brand-dark);
+}
+
+.result-score-badge {
+    background-color: var(--primary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.result-level-text {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.result-level-text.low { color: #15803d; }
+.result-level-text.moderate { color: #b45309; }
+.result-level-text.high { color: #b91c1c; }
+
+.result-description {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.result-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 550;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.result-action-btn.primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.result-action-btn.primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.result-action-btn.secondary {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+}
+
+.result-action-btn.secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
+/* ================= STRESS ANALYSIS DASHBOARD ================= */
+.stress-dashboard {
+    width: 100%;
+    margin-top: 10px;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--primary-light) 100%);
+    border: 1.5px solid var(--primary);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(89, 120, 88, 0.1);
+    color: var(--text-dark);
+}
+
+.dash-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.dash-section {
+    margin-bottom: 12px;
+}
+
+.dash-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.dash-val.enriched-text {
+    font-size: 12.5px;
+    line-height: 1.4;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+html.dark-mode .dash-val.enriched-text {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.dash-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+html.dark-mode .dash-card {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.token-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.token {
+    background-color: var(--primary-light);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.sentiment-meter {
+    margin-top: 6px;
+}
+
+.meter-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+html.dark-mode .meter-bar {
+    background: #334155;
+}
+
+.meter-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
+}
+
+.meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.stress-level-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+html.dark-mode .stress-level-box {
+    background: #7f1d1d;
+    border-color: #991b1b;
+}
+
+.stress-level-box.medium-stress {
+    background: #fef3c7;
+    border-color: #fcd34d;
+}
+
+html.dark-mode .stress-level-box.medium-stress {
+    background: #78350f;
+    border-color: #92400e;
+}
+
+.stress-level-box.low-stress {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+html.dark-mode .stress-level-box.low-stress {
+    background: #064e3b;
+    border-color: #065f46;
+}
+
+.level-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ef4444;
+}
+
+.stress-level-box.medium-stress .level-indicator {
+    background-color: #f59e0b;
+}
+
+.stress-level-box.low-stress .level-indicator {
+    background-color: #10b981;
+}
+
+.level-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.level-text strong {
+    font-size: 12px;
+    color: var(--text-dark);
+}
+
+.level-text span {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.recommendation-box {
+    background: rgba(89, 120, 88, 0.05);
+    border-radius: 10px;
+    padding: 12px;
+    border-left: 4px solid var(--primary);
+}
+
+.rec-text {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.rec-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.rec-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.rec-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.rec-btn.secondary {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+}
+
+.rec-btn.secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+

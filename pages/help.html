@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - SereneMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/help.css">
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+                        <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="journal.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-book-open"></i> Journal</li></a>
+                <a href="voice-reflection.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection <span class="badge-new">New</span></li></a>
+                <a href="chatbot.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-regular fa-comment-dots"></i> Chatbot</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="help.html" style="text-decoration: none; color: inherit;"><li class="menu-item active"><i class="fa-solid fa-circle-question"></i> Help</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget" style="margin-top: auto; margin-bottom: 15px;">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Help & Support Center</h1>
+                <p>Learn how to use SereneMind, review medical guidelines, and find answers to common questions.</p>
+            </header>
+
+            <!-- Safety & Medical Disclaimer -->
+            <div class="disclaimer-card">
+                <div class="disclaimer-header">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>Important Safety & Medical Disclaimer</h3>
+                </div>
+                <div class="disclaimer-body">
+                    <p><strong>SereneMind is NOT a medical device, clinical diagnostic tool, or therapeutic service.</strong> The breathing exercises, guided meditations, journal suggestions, and AI chatbot prompts are designed solely for educational, self-reflection, and general mindfulness purposes. They do not constitute, nor are they a replacement for, clinical advice, professional therapy, psychiatric counseling, or medical diagnosis.</p>
+                    <p style="margin-bottom: 0;">Do not ignore or delay professional medical assistance because of information read, suggested, or generated in this application. If you are experiencing a severe mental health crisis, self-harming thoughts, or a psychiatric emergency, please reach out to qualified professionals immediately.</p>
+                </div>
+            </div>
+
+            <!-- Feature Guide (How it works) -->
+            <section class="help-section">
+                <h2 class="section-title"><i class="fa-solid fa-compass"></i> Working with SereneMind</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">🍃</div>
+                        <h3>Breathing Exercises</h3>
+                        <p>Access the breathing card, select a session duration, and sync your inhalations and exhalations with the animated breathing ring. Designed to help ground your attention and lower stress.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">🌿</div>
+                        <h3>Guided Meditation</h3>
+                        <p>Pick a calming soundscape (such as Morning Serenity, Ocean Waves, or Zen Melodies), select your timer, and let ambient audio sweep away mental strain.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">💬</div>
+                        <h3>AI Chat Companion</h3>
+                        <p>Chat anonymously and privately with SereneBot. Express your thoughts, work through emotional blocks, or trigger custom breathing routines whenever you need support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">📖</div>
+                        <h3>Mindfulness Journal</h3>
+                        <p>Maintain a personal reflection journal. Write down your feelings and keep a clean, searchable history of your daily milestones and reflections.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">📊</div>
+                        <h3>Mood Analytics</h3>
+                        <p>Track your mental health over time. Review mood trends, weekly averages, and keep your daily streak alive to stay motivated on your mindfulness journey.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">⚙️</div>
+                        <h3>Preferences & Theme</h3>
+                        <p>Customize settings to match your mood. Configure custom email check-in frequencies, customize profile info, or toggle between light and dark themes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQs -->
+            <section class="help-section">
+                <h2 class="section-title"><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Is my data stored securely and privately?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Yes, completely. All your mood ratings, reflections, settings, and chat logs are stored locally in your web browser's secure cache (`localStorage`). No personal wellness data is uploaded or shared with remote servers.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does SereneBot generate responses?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                SereneBot uses a set of supportive chat rules and prompt suggestions designed to help you organize thoughts and relax. It is not an actual therapist, physician, or medical expert, and cannot offer clinical advice.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I enable or disable Dark Mode?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Open the <strong>Settings</strong> page from the sidebar. Scroll down to the Preferences section and check or uncheck the "Dark Mode" toggle. Your preferences are saved automatically.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I use SereneMind on a mobile device?</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                Absolutely. The user interface has been designed with responsive styling that shifts dynamically for standard mobile phones and tablets, allowing you to access tools on the go.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="help-footer">
+                <p>&copy; 2026 SereneMind. Your self-guided space for mindfulness.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../assets/js/help.js"></script>
+</body>
+</html>
+

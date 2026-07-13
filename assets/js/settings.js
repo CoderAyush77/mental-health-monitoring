@@ -41,3 +41,16 @@ if (reminderFrequency) {
         localStorage.setItem('reminderFrequency', reminderFrequency.value);
     });
 }
+
+// Save all changes when Save button is clicked
+const saveBtn = document.querySelector('.btn-save');
+if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+        // Show a brief alert to confirm save
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saved!';
+        setTimeout(() => {
+            saveBtn.innerHTML = originalText;
+        }, 2000);
+    });
+}

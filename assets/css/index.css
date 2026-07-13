@@ -392,6 +392,50 @@ body {
     font-weight: 500;
 }
 
+html.dark-mode .pill {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+.select-pill {
+    position: relative;
+    padding-right: 28px !important;
+    cursor: pointer;
+}
+
+.select-pill::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    pointer-events: none;
+    color: #777;
+}
+
+html.dark-mode .select-pill::after {
+    color: #ccc;
+}
+
+.pill-select {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    padding: 0;
+    margin: 0;
+}
+
 /* DAILY WELLNESS SNAPSHOT */
 .question {
     text-align: center;
@@ -1095,3 +1139,121 @@ html.dark-mode .no-history {
 .no-history-btn:hover {
     background-color: var(--primary-hover);
 }
+/* ================= NEW SIDEBAR STYLES ================= */
+.sidebar {
+    background: #ffffff;
+    border: none;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo .subtitle {
+    font-size: 11px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.parent-icon {
+    font-size: 10px !important;
+    width: auto !important;
+    margin-left: auto;
+}
+
+.nav-submenu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 36px;
+    margin-top: 4px;
+    position: relative;
+}
+
+.nav-submenu::before {
+    content: "";
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 14px;
+    width: 1px;
+    background: #e0e0e0;
+}
+
+.submenu-item {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+    color: #777 !important;
+    position: relative;
+}
+
+.submenu-dot {
+    width: 4px;
+    height: 4px;
+    background: #ccc;
+    border-radius: 50%;
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.05);
+    margin: 12px 0;
+}
+
+/* ================= QUICK TOOLS STYLES ================= */
+.quick-tools-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quick-tool-btn {
+    background: #f4f7f4;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--brand-dark);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.quick-tool-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.qt-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.qt-left i {
+    color: var(--primary);
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.qt-arrow {
+    color: #999;
+    font-size: 12px;
+}
+

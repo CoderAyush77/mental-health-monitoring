@@ -42,6 +42,63 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Synthesize a soothing healing chime using Web Audio API
+    const playSoothingChime = (pitch = 528) => {
+        try {
+            const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtxClass) return;
+            
+            const audioCtx = new AudioCtxClass();
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc1.type = 'sine';
+            osc2.type = 'sine';
+            
+            // Major third chord harmony for a pleasant healing chime
+            osc1.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+            osc2.frequency.setValueAtTime(pitch * 1.25, audioCtx.currentTime);
+            
+            // Gentle linear volume decay
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+            
+            osc1.start(audioCtx.currentTime);
+            osc2.start(audioCtx.currentTime);
+            
+            osc1.stop(audioCtx.currentTime + 1.2);
+            osc2.stop(audioCtx.currentTime + 1.2);
+        } catch (e) {
+            console.warn("Audio chime play blocked:", e);
+        }
+    };
+
+    // Soothing text-to-speech voice cue
+    const speakInstruction = (text) => {
+        try {
+            if ('speechSynthesis' in window) {
+                // Cancel active speech to avoid overlaps
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Fine-tune rate and pitch for a calm, soothing tone
+                utterance.rate = 0.8;   // Slow, relaxing speech rate
+                utterance.pitch = 1.0;  // Standard warm pitch
+                utterance.volume = 0.55; // Gentle volume
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        } catch (e) {
+            console.warn("Speech synthesis blocked or not supported:", e);
+        }
+    };
+
     // Breathing phase timing (4s inhale, 4s hold, 4s exhale)
     const tickBreathing = () => {
         // Increment breath time (loops every 12 seconds)
@@ -51,14 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Start Inhale (0-3s)
             ringWrapper.className = 'breathing-ring-wrapper inhale';
             instructionLabel.textContent = 'Breathe In';
+            playSoothingChime(528); // Solfeggio Love/Peace frequency
+            speakInstruction('Breathe In');
         } else if (breathTime === 4) {
             // Start Hold (4-7s)
             ringWrapper.className = 'breathing-ring-wrapper hold';
             instructionLabel.textContent = 'Hold';
+            playSoothingChime(396); // Grounding/Liberation frequency
+            speakInstruction('Hold');
         } else if (breathTime === 8) {
             // Start Exhale (8-11s)
             ringWrapper.className = 'breathing-ring-wrapper exhale';
             instructionLabel.textContent = 'Breathe Out';
+            playSoothingChime(417); // Easing stress frequency
+            speakInstruction('Breathe Out');
         }
     };
 
@@ -68,12 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (breathTime < 4) {
             ringWrapper.className = 'breathing-ring-wrapper inhale';
             instructionLabel.textContent = 'Breathe In';
+            playSoothingChime(528);
+            speakInstruction('Breathe In');
         } else if (breathTime < 8) {
             ringWrapper.className = 'breathing-ring-wrapper hold';
             instructionLabel.textContent = 'Hold';
+            playSoothingChime(396);
+            speakInstruction('Hold');
         } else {
             ringWrapper.className = 'breathing-ring-wrapper exhale';
             instructionLabel.textContent = 'Breathe Out';
+            playSoothingChime(417);
+            speakInstruction('Breathe Out');
         }
 
         // Tick every 1000ms
@@ -154,6 +223,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reset button click handler
     resetBtn.addEventListener('click', resetSession);
+
+    // Instructions Modal logic
+    const instructionsModal = document.getElementById('instructionsModal');
+    const showInstructionsBtn = document.getElementById('showInstructionsBtn');
+    const closeInstructionsModal = document.getElementById('closeInstructionsModal');
+    const gotItBtn = document.getElementById('gotItBtn');
+
+    const openInstructions = () => {
+        instructionsModal.classList.add('active');
+    };
+
+    const closeInstructions = () => {
+        instructionsModal.classList.remove('active');
+    };
+
+    showInstructionsBtn.addEventListener('click', openInstructions);
+    closeInstructionsModal.addEventListener('click', closeInstructions);
+    gotItBtn.addEventListener('click', closeInstructions);
+
+    // Close modal when clicking outside the card
+    instructionsModal.addEventListener('click', (e) => {
+        if (e.target === instructionsModal) {
+            closeInstructions();
+        }
+    });
+
+    // Show instructions on load
+    openInstructions();
 
     // Initialize timer text display on load
     updateTimerDisplay(secondsLeft);

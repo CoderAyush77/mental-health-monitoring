@@ -1,0 +1,9 @@
+Flask
+flask-cors
+transformers
+torch
+scikit-learn
+librosa
+soundfile
+numpy
+werkzeug

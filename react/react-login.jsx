@@ -52,7 +52,6 @@ const LoginPage = () => {
               <label className="flex items-center gap-2 text-sm text-gray-600">
                 <input type="checkbox" className="rounded text-emerald-600" /> Remember me
               </label>
-              <a href="#" className="text-sm text-emerald-700 hover:underline">Forgot Password?</a>
             </div>
 
             <button className="w-full bg-emerald-700 text-white py-3 rounded-lg font-semibold hover:bg-emerald-800 transition">

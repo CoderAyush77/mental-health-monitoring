@@ -24,10 +24,14 @@
                 <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
             </div>
 
-            <ul class="menu">
+                        <ul class="menu">
                 <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="journal.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-book-open"></i> Journal</li></a>
+                <a href="voice-reflection.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection <span class="badge-new">New</span></li></a>
+                <a href="chatbot.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-regular fa-comment-dots"></i> Chatbot</li></a>
                 <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
                 <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="help.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-circle-question"></i> Help</li></a>
                 <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
             </ul>
 
@@ -44,9 +48,14 @@
 
         <main class="main-content">
             
-            <div class="page-title">
-                <h1>Breathing Exercise</h1>
-                <p>Take a moment to center yourself. Follow the guide to sync your breathing and release tension.</p>
+            <div class="page-title" style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
+                <div>
+                    <h1>Breathing Exercise</h1>
+                    <p>Take a moment to center yourself. Follow the guide to sync your breathing and release tension.</p>
+                </div>
+                <button id="showInstructionsBtn" class="info-btn">
+                    <i class="fa-solid fa-circle-info"></i> Instructions
+                </button>
             </div>
 
             <div class="breathing-card">
@@ -95,6 +104,30 @@
         </main>
     </div>
 
+    <!-- Instructions Modal -->
+    <div class="modal-overlay" id="instructionsModal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeInstructionsModal" aria-label="Close modal">&times;</button>
+            <h3><i class="fa-solid fa-circle-info" style="color: var(--primary); margin-right: 8px;"></i>How to Start</h3>
+            <div class="instructions-content" style="text-align: left; margin-top: 20px;">
+                <p style="margin-bottom: 16px; line-height: 1.6;">Follow these simple steps to begin your mindful breathing session:</p>
+                <ol style="margin-left: 20px; margin-bottom: 20px; line-height: 1.8; font-size: 13.5px;">
+                    <li><strong>Select Duration:</strong> Choose your preferred time (1, 2, or 5 Minutes) using the dropdown at the top.</li>
+                    <li><strong>Click Start:</strong> Press the <strong>Start</strong> button to begin. You can Pause or Reset at any time.</li>
+                    <li><strong>Synchronize Your Breath:</strong> Follow the circle visualizer:
+                        <ul style="margin-left: 20px; margin-top: 4px; margin-bottom: 8px; list-style-type: disc;">
+                            <li><strong>Breathe In:</strong> Inhale slowly as the circle expands.</li>
+                            <li><strong>Hold:</strong> Rest your breath gently when the circle stays large and pulses.</li>
+                            <li><strong>Breathe Out:</strong> Exhale slowly as the circle contracts.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            <button class="return-btn" id="gotItBtn" style="margin-top: 10px; width: 100%;">Got It, Let's Start!</button>
+        </div>
+    </div>
+
     <script src="../assets/js/breathing.js"></script>
 </body>
 </html>
+

@@ -28,10 +28,13 @@
 
             <nav class="nav">
                 <a href="index.html" class="active"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
+                <a href="pages/journal.html"><i class="fa-solid fa-book-open"></i> Journal</a>
+                <a href="pages/voice-reflection.html"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection <span class="badge-new" style="background: #dcfce7; color: #16a34a; font-size: 0.65rem; padding: 0.1rem 0.4rem; border-radius: 10px; margin-left: 0.5rem; font-weight: 600;">New</span></a>
+                <a href="pages/chatbot.html"><i class="fa-regular fa-comment-dots"></i> Chatbot</a>
                 <a href="pages/analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
                 <a href="pages/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-                <a href="pages/login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    Logout</a>
+                <a href="pages/help.html"><i class="fa-solid fa-circle-question"></i> Help</a>
+                <a href="pages/login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
             </nav>
 
             <div class="meditation-card">
@@ -67,7 +70,7 @@
                     </div>
                     <a href="pages/settings.html" style="text-decoration: none; color: inherit; display: block;">
                         <div class="user">
-                            <div class="user-avatar">👤</div>
+                            <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
                             <div class="user-info">
                                 <small>Good Afternoon,</small>
                                 <strong>User</strong>
@@ -82,7 +85,17 @@
                 <section class="card">
                     <div class="card-header">
                         <h2 class="card-title">Daily Wellness Snapshot</h2>
-                        <div class="pill">📅 Today</div>
+                        <div class="pill select-pill">
+                            <select id="daySelect" class="pill-select">
+                                <option value="0">📅 Today</option>
+                                <option value="1">📅 Yesterday</option>
+                                <option value="2">📅 2 Days Ago</option>
+                                <option value="3">📅 3 Days Ago</option>
+                                <option value="4">📅 4 Days Ago</option>
+                                <option value="5">📅 5 Days Ago</option>
+                                <option value="6">📅 6 Days Ago</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="question">How are you feeling today?</div>
@@ -115,7 +128,7 @@
                         <p>Your positive mindset can make today amazing.</p>
                     </div>
 
-                    <button class="check-btn"><i class="fa-solid fa-circle-check"></i> Check-in</button>
+
                 </section>
 
                 <section class="card">
@@ -218,80 +231,34 @@
                 </div>
             </section>
 
-            <section class="card" style="padding: 24px;">
-                <h2 class="card-title" style="margin-bottom: 20px; font-size: 16px;">Quick Tools</h2>
-                <div class="tools-grid">
-
-                    <a href="pages/breathing.html" class="tool-card-link">
-                        <div class="tool-card">
-                            <div class="tool-icon">🍃</div>
-                            <div class="tool-info">
-                                <h4>Breathing Exercise</h4>
-                                <p>Calm your mind</p>
-                            </div>
-                        </div>
+            <section class="card quick-tools-card" style="padding: 24px; margin-bottom: 24px;">
+                <h2 class="card-title" style="font-size: 16px; margin-bottom: 16px;">Quick Tools</h2>
+                <div class="quick-tools-list" style="display: flex; flex-direction: row; gap: 16px; overflow-x: auto;">
+                    <a href="pages/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                        <div class="qt-left"><i class="fa-solid fa-leaf"></i> Breathing Exercise</div>
+                        <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-
-                    <a href="pages/meditation.html" class="tool-card-link">
-                        <div class="tool-card">
-                            <div class="tool-icon">🌿</div>
-                            <div class="tool-info">
-                                <h4>Guided Meditation</h4>
-                                <p>Find your peace</p>
-                            </div>
-                        </div>
+                    <a href="pages/meditation.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                        <div class="qt-left"><i class="fa-solid fa-spa"></i> Guided Meditation</div>
+                        <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-
-                    <a href="pages/journal.html" class="tool-card-link">
-                        <div class="tool-card">
-                            <div class="tool-icon">📖</div>
-                            <div class="tool-info">
-                                <h4>Journal Entry</h4>
-                                <p>Write your thoughts</p>
-                            </div>
-                        </div>
+                    <a href="pages/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                        <div class="qt-left"><i class="fa-regular fa-lightbulb"></i> Stress Relief Tips</div>
+                        <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-
-                    <a href="pages/analytics.html" class="tool-card-link">
-                        <div class="tool-card">
-                            <div class="tool-icon">📊</div>
-                            <div class="tool-info">
-                                <h4>View Analytics</h4>
-                                <p>Track your progress</p>
-                            </div>
-                        </div>
+                    <a href="pages/journal.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                        <div class="qt-left"><i class="fa-regular fa-note-sticky"></i> Mood Journal Prompts</div>
+                        <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-
                 </div>
             </section>
+
+
 
         </main>
     </div>
 
-    <!-- Check-in Choice Modal -->
-    <div class="modal-overlay" id="checkinModal">
-        <div class="modal-card">
-            <button class="modal-close" id="closeCheckinModal" aria-label="Close modal">&times;</button>
-            <h3>Daily Check-in</h3>
-            <p>How would you like to reflect today?</p>
-            <div class="modal-choices">
-                <a href="pages/journal.html" class="modal-choice-card">
-                    <div class="choice-icon">📖</div>
-                    <div class="choice-info">
-                        <h4>Write Journal</h4>
-                        <p>Write down your thoughts and feelings</p>
-                    </div>
-                </a>
-                <a href="pages/chatbot.html" class="modal-choice-card">
-                    <div class="choice-icon">💬</div>
-                    <div class="choice-info">
-                        <h4>Chat with Chatbot</h4>
-                        <p>Talk to our supportive AI companion</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+
 
     <!-- JavaScript Interactions -->
     <script src="assets/js/index.js"></script>

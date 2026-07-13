@@ -26,6 +26,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Day Selection & Local Storage Logs Setup
+    const daySelect = document.getElementById('daySelect');
+
+    const getDateStr = (daysAgo) => {
+        const d = new Date();
+        d.setDate(d.getDate() - daysAgo);
+        return d.toLocaleDateString('en-CA'); // "YYYY-MM-DD" local format
+    };
+
+    const loadCheckinForDay = () => {
+        const daysAgo = parseInt(daySelect ? daySelect.value : '0');
+        const dateStr = getDateStr(daysAgo);
+        const history = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+        const entry = history.find(e => e.date === dateStr);
+
+        if (entry) {
+            // Select mood in UI
+            moods.forEach(mood => {
+                const name = mood.querySelector('p').textContent.trim();
+                if (name === entry.mood) {
+                    mood.classList.add('selected');
+                } else {
+                    mood.classList.remove('selected');
+                }
+            });
+            // Update feedback box
+            const feedback = feedbacks[entry.mood];
+            if (feedback && feedbackBox) {
+                feedbackBox.innerHTML = `<h4>${feedback.emoji}</h4><p>${feedback.text}</p>`;
+            }
+            if (checkBtn) {
+                checkBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Check-in Logged`;
+                checkBtn.style.opacity = '0.85';
+            }
+        } else {
+            // No log for this day
+            moods.forEach(mood => mood.classList.remove('selected'));
+            if (feedbackBox) {
+                const dayLabel = daysAgo === 0 ? 'today' : daysAgo === 1 ? 'yesterday' : `${daysAgo} days ago`;
+                feedbackBox.innerHTML = `<h4>🌿 No record found</h4><p>Select a mood above and click Check-in to log how you felt ${dayLabel}.</p>`;
+            }
+            if (checkBtn) {
+                checkBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Check-in`;
+                checkBtn.style.opacity = '1';
+            }
+        }
+    };
+
     moods.forEach(mood => {
         mood.addEventListener('click', () => {
             // Remove 'selected' class from all moods
@@ -43,57 +91,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     feedbackBox.innerHTML = `<h4>${feedback.emoji}</h4><p>${feedback.text}</p>`;
                 }
             }
+
+                // Immediately save to storage/DB
+                const daysAgo = parseInt(daySelect ? daySelect.value : '0');
+                const dateStr = getDateStr(daysAgo);
+
+                const history = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+                const existingIndex = history.findIndex(e => e.date === dateStr);
+                if (existingIndex !== -1) {
+                    history[existingIndex].mood = moodName;
+                    history[existingIndex].timestamp = new Date().toISOString();
+                } else {
+                    history.push({
+                        date: dateStr,
+                        mood: moodName,
+                        timestamp: new Date().toISOString()
+                    });
+                }
+                localStorage.setItem('moodHistory', JSON.stringify(history));
+
+                if (daysAgo === 0) {
+                    localStorage.setItem('lastCheckedMood', moodName);
+                    localStorage.setItem('lastCheckedTime', new Date().toISOString());
+                }
+            }
         });
     });
 
-    // 2. Check-in Button Interaction (Open Choice Modal)
-    const checkBtn = document.querySelector('.check-btn');
-    const checkinModal = document.getElementById('checkinModal');
-    const closeCheckinModal = document.getElementById('closeCheckinModal');
-
-    const openModal = () => {
-        if (checkinModal) {
-            checkinModal.classList.add('active');
-            if (checkBtn) {
-                checkBtn.classList.add('active');
-            }
-        }
-    };
-
-    const closeModal = () => {
-        if (checkinModal) {
-            checkinModal.classList.remove('active');
-            if (checkBtn) {
-                checkBtn.classList.remove('active');
-            }
-        }
-    };
-
-    if (checkBtn) {
-        checkBtn.addEventListener('click', () => {
-            const selectedMood = document.querySelector('.mood.selected p');
-            const moodName = selectedMood ? selectedMood.textContent.trim() : 'Calm';
-            localStorage.setItem('lastCheckedMood', moodName);
-            localStorage.setItem('lastCheckedTime', new Date().toISOString());
-            openModal();
-        });
+    if (daySelect) {
+        daySelect.addEventListener('change', loadCheckinForDay);
     }
 
-    if (closeCheckinModal && checkinModal) {
-        closeCheckinModal.addEventListener('click', () => {
-            closeModal();
-        });
-        
-        // Close modal when clicking outside of modal card
-        checkinModal.addEventListener('click', (e) => {
-            if (e.target === checkinModal) {
-                closeModal();
-            }
-        });
-    }
-    if (window.location.hash === '#checkin') {
-        openModal();
-    }
+    // Load initial checkin state for today
+    loadCheckinForDay();
 
     // 3. Logout Redirect Handlers
     const logoutBtns = document.querySelectorAll('.logout-btn, .logout');
@@ -153,3 +183,19 @@ document.addEventListener('DOMContentLoaded', () => {
         renderJournalHistory();
     }
 });
+    // 5. Sidebar Nav Toggle
+    const navParent = document.querySelector(".nav-item-parent");
+    const navSubmenu = document.querySelector(".nav-submenu");
+    if (navParent && navSubmenu) {
+        navParent.addEventListener("click", (e) => {
+            e.preventDefault();
+            const isHidden = navSubmenu.style.display === "none";
+            navSubmenu.style.display = isHidden ? "flex" : "none";
+            const icon = navParent.querySelector(".parent-icon");
+            if (icon) {
+                icon.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+                icon.style.transition = "transform 0.2s";
+            }
+        });
+    }
+

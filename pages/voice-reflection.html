@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SereneMind - Voice Reflection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/journal.css"> <!-- For sidebar and layout basics -->
+    <link rel="stylesheet" href="../assets/css/voice-reflection.css"> <!-- Specific to this new UI -->
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+    
+    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <a href="../index.html"><img src="../assets/images/logo2.png" alt="SereneMind Logo"></a>
+            </div>
+
+            <ul class="menu">
+                <a href="../index.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-column"></i> Dashboard</li></a>
+                <a href="journal.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-book-open"></i> Journal</li></a>
+                <a href="voice-reflection.html" style="text-decoration: none; color: inherit;"><li class="menu-item active"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection <span class="badge-new">New</span></li></a>
+                <a href="chatbot.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-regular fa-comment-dots"></i> Chatbot</li></a>
+                <a href="analytics.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-chart-pie"></i> Analytics</li></a>
+                <a href="settings.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-gear"></i> Settings</li></a>
+                <a href="help.html" style="text-decoration: none; color: inherit;"><li class="menu-item"><i class="fa-solid fa-circle-question"></i> Help</li></a>
+                <a href="login.html" style="text-decoration: none; color: inherit;"><li class="menu-item" style="margin-top: auto; margin-bottom: 10px;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li></a>
+            </ul>
+
+            <div class="sidebar-bottom-widget" style="margin-top: auto; margin-bottom: 15px;">
+                <div class="avatar">
+                    <img src="../assets/images/med.png" alt="Meditating Person">
+                </div>
+                <div class="widget-text">
+                    <h4>Take a deep breath</h4>
+                    <p>You're doing great!</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content voice-reflection-main">
+            
+            <!-- Custom Header for Voice Reflection -->
+            <header class="vr-header">
+                <div class="vr-header-left">
+                    <div class="vr-icon-circle"><i class="fa-solid fa-microphone-lines"></i></div>
+                    <div class="vr-title-group">
+                        <h1>Voice Reflection</h1>
+                        <p>Speak freely. We'll listen, understand and help you reflect.</p>
+                    </div>
+                </div>
+                <div class="vr-header-right">
+                    <div class="vr-tip-widget">
+                        <i class="fa-solid fa-leaf text-green-500"></i>
+                        <div class="vr-tip-text">
+                            <strong>Tip for you</strong>
+                            <p>Take a deep breath. You're doing great!</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="vr-grid">
+                <!-- Column 1: Recording & Transcript -->
+                <div class="vr-col vr-col-1">
+                    <div class="vr-card vr-card-recording">
+                        <div class="vr-status-indicator">
+                            <span class="vr-dot" id="vrDot"></span>
+                            <span id="voiceStatusText">Ready to record</span>
+                        </div>
+                        
+                        <div class="vr-mic-wrapper">
+                            <canvas id="waveformCanvas"></canvas>
+                            <button id="btnRecord" class="vr-mic-btn" aria-label="Start Recording">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="vr-timer" id="voiceTimer">00:00 / 05:00</div>
+                        
+                        <div class="vr-controls">
+                            <button id="btnPause" class="vr-ctrl-btn pause" disabled><i class="fa-solid fa-pause text-red-400"></i> Pause</button>
+                            <button id="btnResume" class="vr-ctrl-btn resume" style="display:none;"><i class="fa-solid fa-play text-yellow-500"></i> Resume</button>
+                            <button id="btnStop" class="vr-ctrl-btn stop" disabled><i class="fa-solid fa-square text-gray-500"></i> Stop</button>
+                            <button id="btnCancel" class="vr-ctrl-btn cancel" disabled><i class="fa-solid fa-xmark text-gray-400"></i> Cancel</button>
+                        </div>
+                        
+                        <div class="vr-privacy-inline">
+                            <i class="fa-solid fa-shield-halved text-green-500"></i> Your data is private and secure
+                        </div>
+                    </div>
+
+                    <div class="vr-card vr-card-transcript">
+                        <div class="vr-card-header">
+                            <div class="vr-card-title">
+                                <i class="fa-regular fa-file-lines text-blue-500"></i> Live Transcript
+                                <span class="vr-badge-ai">AI</span>
+                            </div>
+                        </div>
+                        <div class="vr-transcript-content" id="transcriptBox">
+                            Press the microphone icon to begin your voice reflection. Your transcript will appear here as you speak.
+                        </div>
+                        <div class="vr-transcript-footer">
+                            <span class="vr-lang">Language: English <i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="vr-auto-save"><i class="fa-solid fa-check-circle text-green-500"></i> Auto-saving...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Analytics -->
+                <div class="vr-col vr-col-2">
+                    <div class="vr-card vr-card-tone">
+                        <div class="vr-card-header vr-flex-between">
+                            <div class="vr-card-title"><i class="fa-solid fa-wave-square text-green-500"></i> Tone Analyzer</div>
+                            <div class="vr-emotion-badge" id="overallEmotionBadge">
+                                <i class="fa-regular fa-face-smile" id="overallEmotionIcon"></i>
+                                <div class="vr-emotion-info">
+                                    <strong id="overallEmotion">Calm</strong>
+                                    <span>Overall Emotion</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vr-metrics-list">
+                            <div class="vr-metric-row">
+                                <div class="vr-metric-label"><i class="fa-solid fa-star text-yellow-400"></i> Confidence</div>
+                                <div class="vr-progress-container"><div class="vr-progress-bar bg-green-500" id="barConfidence" style="width: 0%;"></div></div>
+                                <div class="vr-metric-val" id="valConfidence">0%</div>
+                            </div>
+                            <div class="vr-metric-row">
+                                <div class="vr-metric-label"><i class="fa-solid fa-bolt text-yellow-500"></i> Energy</div>
+                                <div class="vr-progress-container"><div class="vr-progress-bar bg-green-500" id="barEnergy" style="width: 0%;"></div></div>
+                                <div class="vr-metric-val" id="valEnergy">0%</div>
+                            </div>
+                            <div class="vr-metric-row">
+                                <div class="vr-metric-label"><i class="fa-solid fa-heart-pulse text-red-500"></i> Stress Level</div>
+                                <div class="vr-progress-container"><div class="vr-progress-bar bg-orange-400" id="barStress" style="width: 0%;"></div></div>
+                                <div class="vr-metric-val" id="valStress">0%</div>
+                            </div>
+                            <div class="vr-metric-row">
+                                <div class="vr-metric-label"><i class="fa-regular fa-clock text-green-500"></i> Speech Pace</div>
+                                <div class="vr-progress-container"><div class="vr-progress-bar bg-green-500" id="barPace" style="width: 0%;"></div></div>
+                                <div class="vr-metric-val" id="valPace">0%</div>
+                            </div>
+                            <div class="vr-metric-row">
+                                <div class="vr-metric-label"><i class="fa-solid fa-leaf text-green-600"></i> Positivity</div>
+                                <div class="vr-progress-container"><div class="vr-progress-bar bg-green-500" id="barPositivity" style="width: 0%;"></div></div>
+                                <div class="vr-metric-val" id="valPositivity">0%</div>
+                            </div>
+                        </div>
+
+                        <div class="vr-timeline-section">
+                            <h4>Emotion Timeline</h4>
+                            <div class="vr-chart-container">
+                                <canvas id="emotionTimelineCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vr-card vr-card-speech">
+                        <div class="vr-card-header">
+                            <div class="vr-card-title">Speech Metrics</div>
+                        </div>
+                        <div class="vr-speech-grid">
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-green-100 text-green-500"><i class="fa-solid fa-comment-dots"></i></div>
+                                <div class="vsb-info"><span>Words</span><strong id="statWords">0</strong></div>
+                            </div>
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-blue-100 text-blue-500"><i class="fa-regular fa-clock"></i></div>
+                                <div class="vsb-info"><span>Duration</span><strong id="statDuration">00:00</strong></div>
+                            </div>
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-purple-100 text-purple-500"><i class="fa-solid fa-pause"></i></div>
+                                <div class="vsb-info"><span>Pauses</span><strong id="statPauses">0</strong></div>
+                            </div>
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-indigo-100 text-indigo-500"><i class="fa-solid fa-wave-square"></i></div>
+                                <div class="vsb-info"><span>Avg. Pitch</span><strong id="statPitch">Medium</strong></div>
+                            </div>
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-teal-100 text-teal-500"><i class="fa-solid fa-volume-high"></i></div>
+                                <div class="vsb-info"><span>Volume</span><strong id="statVolume">0%</strong></div>
+                            </div>
+                            <div class="vr-speech-box">
+                                <div class="vsb-icon bg-green-100 text-green-500"><i class="fa-solid fa-gauge-high"></i></div>
+                                <div class="vsb-info"><span>Speech Rate</span><strong id="statRate">Normal</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3: AI Insights & Actions -->
+                <div class="vr-col vr-col-3">
+                    <div class="vr-card vr-card-ai">
+                        <div class="vr-card-header">
+                            <div class="vr-card-title"><i class="fa-solid fa-wand-magic-sparkles text-purple-500"></i> AI Reflection</div>
+                        </div>
+                        <div class="vr-ai-text" id="aiReasoningBox">
+                            Start recording to get real-time AI reflection and insights on your voice.
+                        </div>
+                        
+                        <div class="vr-star-ratings">
+                            <div class="vr-rating-item">
+                                <div class="vr-rating-icon bg-red-100 text-red-500"><i class="fa-solid fa-heart-pulse"></i></div>
+                                <div class="vr-rating-info">
+                                    <span>Stress Level</span>
+                                    <div class="vr-stars" id="starsStress">
+                                        <i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vr-rating-item">
+                                <div class="vr-rating-icon bg-green-100 text-green-600"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div class="vr-rating-info">
+                                    <span>Confidence</span>
+                                    <div class="vr-stars" id="starsConfidence">
+                                        <i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vr-rating-item">
+                                <div class="vr-rating-icon bg-yellow-100 text-yellow-500"><i class="fa-solid fa-sun"></i></div>
+                                <div class="vr-rating-info">
+                                    <span>Positivity</span>
+                                    <div class="vr-stars" id="starsPositivity">
+                                        <i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i><i class="fa-regular fa-star text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vr-card vr-card-suggestion">
+                        <h4>Suggested for you</h4>
+                        <a href="breathing.html" class="vr-sugg-link">
+                            <div class="vr-sugg-icon bg-green-100 text-green-600"><i class="fa-solid fa-leaf"></i></div>
+                            <div class="vr-sugg-text">
+                                <strong>3-Minute Breathing Exercise</strong>
+                                <span>Calm your mind and relax</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-400 ml-auto"></i>
+                        </a>
+                    </div>
+
+                    <div class="vr-card vr-card-actions">
+                        <h4>What would you like to do next?</h4>
+                        <div class="vr-action-list">
+                            <button class="vr-action-btn" id="btnSaveToDatabase">
+                                <div class="vr-act-icon bg-blue-50 text-blue-500"><i class="fa-solid fa-book-open"></i></div>
+                                <div class="vr-act-text">
+                                    <strong>Save to Journal</strong>
+                                    <span>Save this reflection to your journal</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-400 ml-auto"></i>
+                            </button>
+                            <button class="vr-action-btn" id="btnAutofillJournal">
+                                <div class="vr-act-icon bg-purple-50 text-purple-500"><i class="fa-solid fa-pen"></i></div>
+                                <div class="vr-act-text">
+                                    <strong>Generate Journal Entry</strong>
+                                    <span>Create a journal entry from this</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-400 ml-auto"></i>
+                            </button>
+                            <button class="vr-action-btn" id="btnDownloadReport">
+                                <div class="vr-act-icon bg-indigo-50 text-indigo-500"><i class="fa-solid fa-download"></i></div>
+                                <div class="vr-act-text">
+                                    <strong>Download Report</strong>
+                                    <span>Download your voice analysis report</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-400 ml-auto"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading overlay for AI (hidden by default) -->
+            <div id="aiLoadingOverlay" class="vr-ai-loading-overlay" style="display: none;">
+                <div class="vr-ai-spinner"></div>
+                <div class="vr-ai-loading-text">Analyzing Speech & Tone...</div>
+                <div class="vr-ai-loading-subtext" id="aiLoadingSubtext">Running client-side AI models</div>
+            </div>
+
+            <footer class="vr-footer">
+                <i class="fa-solid fa-lock text-green-600"></i>
+                <p>Your privacy is our priority. All voice data is encrypted and stored securely.</p>
+                <i class="fa-solid fa-leaf text-green-500 ml-auto"></i>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Reusing existing Audio and Tone Analyzer classes -->
+    <script src="../assets/js/AudioAnalyzer.js"></script>
+    <script src="../assets/js/ToneAnalyzer.js"></script>
+    <script src="../assets/js/WaveformVisualizer.js"></script>
+    <script type="module" src="../assets/js/voice-reflection.js"></script>
+</body>
+</html>

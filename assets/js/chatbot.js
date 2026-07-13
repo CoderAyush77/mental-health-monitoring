@@ -1,40 +1,79 @@
 document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chatForm');
     const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
     const chatMessages = document.getElementById('chatMessages');
     const clearChatBtn = document.getElementById('clearChatBtn');
     const promptButtons = document.querySelectorAll('.prompt-btn');
 
-    // Empathy response data structures
-    const botReplies = {
-        stress: [
-            "I hear you. Feeling stressed and overwhelmed can really take a toll. 🌿 Let's take a quick moment to pause. Would you like to try our <a href='breathing.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Breathing Exercise</a>? It only takes a minute to help settle your nervous system.",
-            "Stress is a heavy weight to carry. Remember to be gentle with yourself. If you'd like, you can explore some calming soundscapes in <a href='meditation.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Guided Meditation</a> to help ground your thoughts."
-        ],
-        breathing: [
-            "Absolutely! Grounding your breath is one of the fastest ways to calm your mind. 🍃 Click here to start our interactive <a href='breathing.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Breathing Exercise</a> page. Try following the 'Inhale, Hold, Exhale' rhythm for a few cycles."
-        ],
-        sad: [
-            "I'm so sorry you're feeling down. 😔 Please know that it's completely okay to not be okay. Your feelings are valid. Would it help to write down what's on your mind? You can log a private reflection in your <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Mindfulness Journal</a>.",
-            "I'm here for you. When everything feels heavy, it can help to focus on one tiny comforting thing—a warm cup of tea, a cozy blanket, or a favorite song. What is something gentle you can do for yourself today?"
-        ],
-        journal: [
-            "Journaling is a beautiful way to process emotions. ✍️ Here is a gentle prompt to get you started: *'What is one small thing that made you feel safe or comfortable today?'* You can write your thoughts on the <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Journal Page</a>.",
-            "Writing things down helps declutter our minds. Try opening a new page on your <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Journal</a> and write continuously for 3 minutes without worrying about grammar or structure. Just let it flow."
-        ],
-        happy: [
-            "I'm so glad to hear that! ☀️ Carrying positive energy is wonderful. Remember to take a snapshot of this feeling. You can note down what made today great in your <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Journal</a> so you can look back on it on lower days.",
-            "That's lovely! 🌿 Enjoy this beautiful state of mind, and thank you for sharing your positive vibes with me."
-        ],
-        gratitude: [
-            "Practicing gratitude is a powerful mindfulness tool. ✨ Try reflecting on three small things you are thankful for today—no matter how small, like a good cup of coffee or a kind message. You can log them in your <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Journal</a>."
-        ],
-        default: [
-            "Thank you for sharing that with me. I'm listening. 🌿 Can you tell me a little more about how that makes you feel?",
-            "I understand. SereneMind is here to support you. Would you like to write a reflection in your <a href='journal.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Journal</a>, or try a calming <a href='breathing.html' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Breathing Exercise</a>?",
-            "That sounds like a lot to reflect on. Take a deep breath. 🍃 Remember that mindfulness is a journey, and you are taking it one step at a time."
-        ]
-    };
+    // =========================================================================
+    // 🔑 INSERT YOUR GROQ API KEY HERE
+    // Get a free key at: https://console.groq.com/keys
+    // =========================================================================
+    const GROQ_API_KEY = "YOUR_API_KEY_HERE";
+    // =========================================================================
+
+    const SYSTEM_PROMPT = `
+# MindCare Interactive Mental Health Chatbot – System Prompt
+
+## Identity
+You are **MindCare**, a compassionate AI mental wellness companion.
+Your role is to create a safe, natural, and supportive conversation where users feel comfortable sharing their thoughts, emotions, and experiences.
+You are **not a doctor, psychiatrist, psychologist, or therapist**. Never diagnose mental illnesses or prescribe medication.
+
+Your goal is to:
+* Understand the user's situation.
+* Ask meaningful follow-up questions.
+* Encourage self-reflection.
+* Provide emotional support.
+* Suggest healthy coping strategies when appropriate.
+* Continue the conversation naturally until the user wishes to stop.
+
+## Core Personality
+Always be:
+* Warm, Patient, Curious, Respectful, Calm, Friendly, Non-judgmental, Emotionally intelligent
+Never sound robotic. Never give one-line replies. Never abruptly end conversations. Never ignore emotional cues.
+
+## Conversation State Machine
+Every conversation follows this flow.
+1. Greeting: Welcome the user naturally. (Skip if user starts with a problem).
+2. Information Gathering: Understand what the user is talking about. Identify the topic. Do NOT immediately give advice.
+3. Clarification: If the user's message is vague, ask questions. Always clarify.
+4. Emotional Reflection: Reflect emotions. Do NOT exaggerate or invent emotions.
+5. Exploration: Ask deeper questions. Ask ONE question at a time.
+6. Support: Offer gentle support like Breathing exercises, Journaling, Mindfulness. (CRITICAL: You must use the exact phrases "breathing exercise", "journaling", or "meditation" when suggesting them so they can be auto-linked). Never force advice.
+7. Closing: Ask "Is there anything else you'd like to talk about?"
+
+## Conversation Rules
+Always ask ONE question at a time.
+Never ask more than two consecutive questions without acknowledging the user's feelings.
+If the user gives a short answer, encourage elaboration.
+If the user changes topics, adapt naturally.
+Never repeat the same question.
+Avoid generic responses like "I'm sorry" or "Take care". Use specific empathetic responses.
+
+## Handle Different Situations
+Academic: Ask about assignments, exams, grades, concentration.
+Work: Ask about deadlines, colleagues, boss, workload.
+Relationships: Ask about trust, communication, arguments.
+Family: Ask about parents, siblings, conflicts.
+Physical Health: Ask about sleep, appetite, energy, exercise.
+Emotional Well-being: Explore stress, anxiety, fear, loneliness.
+Lifestyle: Discuss routine, screen time, hobbies.
+Positive Events: Celebrate achievements.
+
+## Unexpected Questions
+Answer normal conversation naturally (Weather, Movies, Programming), then gently return to the user's wellbeing if it fits.
+
+## Safety
+If the user mentions suicide, self-harm, or immediate danger, respond calmly. Encourage contacting trusted people or emergency services. Remain supportive. Never shame or criticize.
+
+## Final Goal
+Feel like talking to a patient, emotionally intelligent friend. Explore thoughts instead of rushing to solutions. Ensure the user feels heard, understood, respected, and encouraged to continue the conversation.
+`;
+
+    // Chat History 
+    let chatHistory = [];
 
     // Helper to format timestamps
     const getFormattedTime = () => {
@@ -49,6 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     };
 
+    // Format markdown to HTML and auto-link features
+    const formatMarkdown = (text) => {
+        let formatted = text
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Bold
+            .replace(/\*(.*?)\*/g, '<i>$1</i>')     // Italic
+            .replace(/\n/g, '<br>')                 // Line breaks
+            .replace(/- (.*)/g, '<li>$1</li>');     // Simple lists
+            
+        // Auto-link to other pages in the app (Catches more variations)
+        formatted = formatted.replace(/\b(breathing exercises?|deep breathing|breathing techniques?)\b/gi, '<a href="breathing.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
+        formatted = formatted.replace(/\b(journaling?|write in a journal)\b/gi, '<a href="journal.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
+        formatted = formatted.replace(/\b(meditation|meditating)\b/gi, '<a href="meditation.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
+        
+        return formatted;
+    };
+
     // Append a message bubble to the chat
     const appendMessage = (sender, text) => {
         const messageDiv = document.createElement('div');
@@ -58,8 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
         bubbleDiv.classList.add('message-bubble');
 
         const p = document.createElement('p');
-        p.innerHTML = text; // Allow HTML links
-        
+        p.innerHTML = formatMarkdown(text);
+
         const timeSpan = document.createElement('span');
         timeSpan.classList.add('message-time');
         timeSpan.textContent = getFormattedTime();
@@ -68,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bubbleDiv.appendChild(timeSpan);
         messageDiv.appendChild(bubbleDiv);
         chatMessages.appendChild(messageDiv);
-        
+
         scrollToBottom();
     };
 
@@ -92,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bubbleDiv.appendChild(typingDiv);
         indicatorDiv.appendChild(bubbleDiv);
         chatMessages.appendChild(indicatorDiv);
-        
+
         scrollToBottom();
     };
 
@@ -104,57 +159,144 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Match keywords to find appropriate replies
-    const getBotResponse = (msg) => {
-        const text = msg.toLowerCase();
-        
-        if (text.includes('stress') || text.includes('overwhelmed') || text.includes('anxious') || text.includes('anxiety')) {
-            const list = botReplies.stress;
-            return list[Math.floor(Math.random() * list.length)];
+    // Fetch response from Groq API (Lightning Fast)
+    const fetchAIResponse = async (userMsg) => {
+        // Add user message to history
+        chatHistory.push({
+            role: "user",
+            content: userMsg
+        });
+
+        if (GROQ_API_KEY === "PASTE_NEW_GROQ_API_KEY_HERE" || !GROQ_API_KEY) {
+            chatHistory.pop(); // Remove user message since it failed
+            return "Developer Error: Please paste your brand new Groq API Key into line 11 of the `chatbot.js` file! Get one for free at console.groq.com";
         }
-        if (text.includes('breath') || text.includes('inhale') || text.includes('exhale')) {
-            return botReplies.breathing[0];
+
+        try {
+            const messagesPayload = [
+                { role: 'system', content: SYSTEM_PROMPT },
+                ...chatHistory
+            ];
+
+            // Using Llama-3.3-70B which is their latest, smartest, and fastest model
+            const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${GROQ_API_KEY}`
+                },
+                body: JSON.stringify({
+                    messages: messagesPayload,
+                    model: 'llama-3.3-70b-versatile',
+                    temperature: 0.6
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'API request failed');
+            }
+
+            const data = await response.json();
+
+            // Extract bot reply from Groq response
+            const botReply = data.choices[0].message.content;
+
+            // Add bot reply to history
+            chatHistory.push({
+                role: "assistant",
+                content: botReply
+            });
+
+            return botReply;
+
+        } catch (error) {
+            console.error("Groq API Error:", error);
+            // Remove the failed user message from history
+            chatHistory.pop();
+
+            const errorString = error.message ? error.message.toLowerCase() : "";
+
+            if (errorString.includes("api key") || errorString.includes("invalid") || errorString.includes("unauthorized") || errorString.includes("401")) {
+                return "The Groq API Key you provided in chatbot.js is invalid. Please double check it!";
+            }
+
+            return `Connection error: ${error.message}. Please try sending that again! 🌿`;
         }
-        if (text.includes('sad') || text.includes('lonely') || text.includes('depress') || text.includes('cry') || text.includes('down')) {
-            const list = botReplies.sad;
-            return list[Math.floor(Math.random() * list.length)];
-        }
-        if (text.includes('journal') || text.includes('write') || text.includes('reflect')) {
-            const list = botReplies.journal;
-            return list[Math.floor(Math.random() * list.length)];
-        }
-        if (text.includes('happy') || text.includes('good') || text.includes('glad') || text.includes('excited')) {
-            const list = botReplies.happy;
-            return list[Math.floor(Math.random() * list.length)];
-        }
-        if (text.includes('gratitude') || text.includes('thankful') || text.includes('grate')) {
-            return botReplies.gratitude[0];
-        }
-        
-        // Default fallbacks
-        const list = botReplies.default;
-        return list[Math.floor(Math.random() * list.length)];
     };
 
     // Handle bot response cycle
-    const handleBotResponse = (userMsg) => {
+    const handleBotResponse = async (userMsg) => {
         showTypingIndicator();
-        
-        // Empathetic delay (800ms - 1500ms)
-        const delay = 800 + Math.random() * 700;
-        
-        setTimeout(() => {
-            removeTypingIndicator();
-            const responseText = getBotResponse(userMsg);
-            appendMessage('bot', responseText);
-        }, delay);
+
+        // Disable input while generating
+        userInput.disabled = true;
+        sendBtn.disabled = true;
+
+        const responseText = await fetchAIResponse(userMsg);
+
+        removeTypingIndicator();
+        appendMessage('bot', responseText);
+
+        // Re-enable input
+        userInput.disabled = false;
+        sendBtn.disabled = false;
+        userInput.focus();
     };
 
-    // Form submit listener
+    // Show initial welcome screen
+    const showWelcomeScreen = () => {
+        chatHistory = []; // Reset history
+
+        // Clear existing messages
+        chatMessages.innerHTML = '';
+
+        const welcomeMsg = "Hello! I am SereneBot. How are you feeling today?";
+
+        // Push initial greeting to history
+        chatHistory.push({
+            role: "assistant",
+            content: welcomeMsg
+        });
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'bot');
+
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.classList.add('message-bubble');
+
+        const p = document.createElement('p');
+        p.innerHTML = welcomeMsg;
+        bubbleDiv.appendChild(p);
+
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('message-time');
+        timeSpan.textContent = getFormattedTime();
+        bubbleDiv.appendChild(timeSpan);
+
+        messageDiv.appendChild(bubbleDiv);
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+
+        // Restore input defaults
+        if (userInput) {
+            userInput.disabled = false;
+            userInput.placeholder = "Type a message...";
+        }
+        if (sendBtn) {
+            sendBtn.disabled = false;
+        }
+        const quickPrompts = document.querySelector('.quick-prompts');
+        if (quickPrompts) {
+            quickPrompts.style.display = 'flex';
+        }
+    };
+
+    // Form submit listener (user messages)
     if (chatForm) {
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const messageText = userInput.value.trim();
             if (!messageText) return;
 
@@ -162,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             appendMessage('user', messageText);
             userInput.value = '';
 
-            // Trigger bot reaction
+            // Trigger bot response
             handleBotResponse(messageText);
         });
     }
@@ -178,19 +320,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Clear Chat history
+    // Clear Chat history (resets to welcome screen)
     if (clearChatBtn) {
         clearChatBtn.addEventListener('click', () => {
             if (confirm('Are you sure you want to clear your current conversation?')) {
-                chatMessages.innerHTML = `
-                    <div class="message bot">
-                        <div class="message-bubble">
-                            <p>Hello! 🌿 I'm SereneBot, your mindfulness companion. If you're feeling stressed, anxious, down, or just want to share a reflection, I'm here to listen without judgment. How are you feeling today?</p>
-                            <span class="message-time">Just now</span>
-                        </div>
-                    </div>
-                `;
+                showWelcomeScreen();
             }
         });
     }
+
+    // Initialize MindCare on load
+    showWelcomeScreen();
 });
