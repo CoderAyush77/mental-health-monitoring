@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import users_collection ,  journals_collection
+from database import users_collection ,  journals_collection ,checkins_collection, voice_collection
 
 settings_bp=Blueprint('settings',__name__)
 
@@ -89,6 +89,8 @@ def delete():
     return jsonify({"error": "Incorrect password. Deletion halted."}), 401
   
   journals_collection.delete_many({"email": email})
+  voice_collection.delete_many({"email": email})    
+  checkins_collection.delete_many({"email": email})  
   users_collection.delete_one({"email":email})
 
   return jsonify({"message":"user account is deleted successfully!"}),200
