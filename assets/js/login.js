@@ -14,21 +14,6 @@
             const email = document.querySelector('#email').value.trim();
             const passValue = document.querySelector('#password').value;
 
-            // 1. Try checking frontend localStorage users (Offline-first experience)
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-            const matchingUser = registeredUsers.find(u => u.email === email && u.password === passValue);
-
-            if (matchingUser) {
-                alert(`Login successful! Welcome back, ${matchingUser.name}.`);
-                localStorage.setItem('currentUser', JSON.stringify({
-                    name: matchingUser.name,
-                    email: matchingUser.email
-                }));
-                window.location.href = '../index.html';
-                return;
-            }
-
-            // 2. Fallback to API if not in local storage
             try {
                 const response = await fetch('http://localhost:5000/api/login', {
                     method: 'POST',
@@ -49,13 +34,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                // For direct demo purposes, allow demo log in if user enters any credentials when offline
-                alert('Backend server offline. Logging you in as a guest for testing purposes.');
-                localStorage.setItem('currentUser', JSON.stringify({
-                    name: 'Guest User',
-                    email
-                }));
-                window.location.href = '../index.html';
+                alert('Backend server offline. Please ensure the backend server is running.');
             }
         });
 
@@ -80,7 +59,7 @@
         });
 
         // Handle Submit Demo Action (Matches Video Behavior)
-        submitDemoEmailBtn.addEventListener('click', () => {
+        submitDemoEmailBtn.addEventListener('click', async () => {
             const email = demoEmailInput.value.trim();
             
             if (email === "") {
@@ -88,11 +67,28 @@
                 return;
             }
 
-            
-            alert(`JSON Output Generated:\n\n{\n  "email": "${email}",\n  "status": "Verified"\n}\n\nProceeding to Dashboard...`);
-            
-            googleDemoModal.classList.remove('active');
-            
-            
-             window.location.href = '../index.html';
+            try {
+                const response = await fetch('http://localhost:5000/api/login_with_google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert(`Login successful! Welcome ${data.user?.name || 'Google User'}`);
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        name: data.user?.name || 'Google User',
+                        email: email
+                    }));
+                    
+                    googleDemoModal.classList.remove('active');
+                    window.location.href = '../index.html';
+                } else {
+                    alert('Google Login failed: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Backend server offline. Please ensure the backend server is running.');
+            }
         });

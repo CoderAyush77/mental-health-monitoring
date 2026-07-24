@@ -95,12 +95,12 @@ Feel like talking to a patient, emotionally intelligent friend. Explore thoughts
             .replace(/\*(.*?)\*/g, '<i>$1</i>')     // Italic
             .replace(/\n/g, '<br>')                 // Line breaks
             .replace(/- (.*)/g, '<li>$1</li>');     // Simple lists
-            
+
         // Auto-link to other pages in the app (Catches more variations)
         formatted = formatted.replace(/\b(breathing exercises?|deep breathing|breathing techniques?)\b/gi, '<a href="breathing.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
         formatted = formatted.replace(/\b(journaling?|write in a journal)\b/gi, '<a href="journal.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
         formatted = formatted.replace(/\b(meditation|meditating)\b/gi, '<a href="meditation.html" style="text-decoration: underline; color: var(--primary-color);">$1</a>');
-        
+
         return formatted;
     };
 

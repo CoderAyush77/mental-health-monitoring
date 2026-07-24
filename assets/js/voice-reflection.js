@@ -645,8 +645,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.metrics) {
                 setProgress(barConfidence, valConfidence, data.metrics.confidence);
                 setProgress(barEnergy, valEnergy, data.metrics.energy);
-                setProgress(barStress, valStress, data.metrics.stress, true);
-                setProgress(barPace, valPace, data.metrics.pace);
+                setProgress(barStress, valStress, data.metrics.stress_level, true);
+                setProgress(barPace, valPace, data.metrics.speech_pace);
                 setProgress(barPositivity, valPositivity, data.metrics.positivity);
 
                 // const stressRating = Math.max(1, Math.ceil(data.metrics.stress / 20));

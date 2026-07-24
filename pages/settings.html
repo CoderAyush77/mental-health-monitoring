@@ -69,7 +69,7 @@
                         <label>Full Name</label>
                         <div class="input-wrapper">
                             <i class="ph ph-user icon-left"></i>
-                            <input type="text" value="Abisha Dhungel">
+                            <input type="text" id="fullNameInput" value="Abisha Dhungel">
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@
                         <label>Email</label>
                         <div class="input-wrapper">
                             <i class="ph ph-envelope-simple icon-left"></i>
-                            <input type="email" value="abisha@gmail.com">
+                            <input type="email" id="emailInput" value="abisha@gmail.com" disabled>
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
                         <label>Username</label>
                         <div class="input-wrapper">
                             <i class="ph ph-at icon-left"></i>
-                            <input type="text" value="abisha">
+                            <input type="text" id="usernameInput" value="abisha">
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         <label>Current Password</label>
                         <div class="input-wrapper">
                             <i class="ph ph-lock-key icon-left"></i>
-                            <input type="password" placeholder="Enter current password" class="pwd-input">
+                            <input type="password" id="currentPasswordInput" placeholder="Enter current password" class="pwd-input">
                             <i class="ph ph-eye icon-right toggle-password"></i>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                         <label>New Password</label>
                         <div class="input-wrapper">
                             <i class="ph ph-lock-key icon-left"></i>
-                            <input type="password" placeholder="Enter new password" class="pwd-input">
+                            <input type="password" id="newPasswordInput" placeholder="Enter new password" class="pwd-input">
                             <i class="ph ph-eye icon-right toggle-password"></i>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                         <label>Confirm Password</label>
                         <div class="input-wrapper">
                             <i class="ph ph-lock-key icon-left"></i>
-                            <input type="password" placeholder="Confirm new password" class="pwd-input">
+                            <input type="password" id="confirmPasswordInput" placeholder="Confirm new password" class="pwd-input">
                             <i class="ph ph-eye icon-right toggle-password"></i>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                     <p>Receive updates and reminders via email</p>
                                 </div>
                                 <label class="toggle">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="emailNotificationsToggle" checked>
                                     <span class="slider"></span>
                                 </label>
                             </div>

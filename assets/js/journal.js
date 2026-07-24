@@ -1,7 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const titleInput = document.getElementById('entryTitle');
     const contentInput = document.getElementById('entryContent');
     const createBtn = document.getElementById('createEntryBtn');
+
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) {
+        alert("Please log in to use the journal.");
+        window.location.href = '../pages/login.html';
+        return;
+    }
+    const email = JSON.parse(currentUserStr).email;
 
     // Enforce 1 journal entry per day limit
     const today = new Date();
@@ -11,8 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
         year: 'numeric' 
     });
 
-    const entries = JSON.parse(localStorage.getItem('journalEntries') || '[]');
-    const hasWrittenToday = entries.some(entry => entry.date === formattedDate);
+    let hasWrittenToday = false;
+    try {
+        const response = await fetch(`http://localhost:5000/api/journal/${encodeURIComponent(email)}`);
+        if (response.ok) {
+            const data = await response.json();
+            const entries = data.journals || [];
+            // Backend might send dates in a different format, adjust if necessary, but this matches offline logic
+            hasWrittenToday = entries.some(entry => entry.date === formattedDate);
+        }
+    } catch (error) {
+        console.error('Error fetching journals:', error);
+    }
 
     if (hasWrittenToday) {
         if (titleInput) {
@@ -43,39 +61,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (createBtn) {
-        createBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            
-            const titleVal = titleInput ? titleInput.value.trim() : '';
-            const contentVal = contentInput ? contentInput.value.trim() : '';
+            createBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                const titleVal = titleInput ? titleInput.value.trim() : '';
+                const contentVal = contentInput ? contentInput.value.trim() : '';
 
-            if (!titleVal || !contentVal) {
-                alert('Please enter both a title and some reflections for your journal entry.');
-                return;
-            }
+                if (!titleVal || !contentVal) {
+                    alert('Please enter both a title and some reflections for your journal entry.');
+                    return;
+                }
 
-            const formattedTime = today.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
+                try {
+                    const response = await fetch('http://localhost:5000/api/journal/create', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, title: titleVal, content: contentVal })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok || response.status === 201) {
+                        // Clear form
+                        if (titleInput) titleInput.value = '';
+                        if (contentInput) contentInput.value = '';
+
+                        alert('Your journal entry has been created successfully!');
+                        window.location.href = '../index.html';
+                    } else {
+                        alert('Failed to create journal entry: ' + (data.message || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Error creating journal:', error);
+                    alert('Backend server offline. Please ensure the backend server is running.');
+                }
             });
-
-            const newEntry = {
-                id: Date.now(),
-                title: titleVal,
-                content: contentVal,
-                date: formattedDate,
-                time: formattedTime
-            };
-            
-            entries.push(newEntry);
-            localStorage.setItem('journalEntries', JSON.stringify(entries));
-
-            // Clear form
-            if (titleInput) titleInput.value = '';
-            if (contentInput) contentInput.value = '';
-
-            alert('Your journal entry has been created successfully!');
-            window.location.href = '../index.html';
-        });
+        }
     }
 });

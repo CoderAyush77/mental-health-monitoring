@@ -74,30 +74,34 @@ acceptTermsBtn.addEventListener('click', () => {
     // Close Modal
     termsOverlay.classList.remove('active');
 
-    // 1. Persist user in the registered users collection for offline login capabilities
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-    // Check if user already exists to prevent duplicates
-    if (!registeredUsers.some(u => u.email === emailVal)) {
-        registeredUsers.push({
-            name: nameVal,
-            email: emailVal,
-            password: passVal
-        });
-        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-    }
+    fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: nameVal, email: emailVal, password: passVal })
+    })
+    .then(response => response.json().then(data => ({ status: response.status, ok: response.ok, data })))
+    .then(({ status, ok, data }) => {
+        if (ok || status === 201) {
+            // Set current active user session details
+            localStorage.setItem('currentUser', JSON.stringify({
+                name: nameVal,
+                email: emailVal,
+                agreedToTerms: true,
+                signupDate: new Date().toISOString()
+            }));
 
-    // 2. Set current active user session details
-    localStorage.setItem('currentUser', JSON.stringify({
-        name: nameVal,
-        email: emailVal,
-        agreedToTerms: true,
-        signupDate: new Date().toISOString()
-    }));
-
-    alert(`Sign Up Successful!\n\nWelcome to SereneMind, ${nameVal}. Your mental health monitoring logs are end-to-end encrypted and completely secure.`);
-    
-    // Redirect to home/dashboard
-    window.location.href = '../index.html';
+            alert(`Sign Up Successful!\n\nWelcome to SereneMind, ${nameVal}. Your mental health monitoring logs are end-to-end encrypted and completely secure.`);
+            
+            // Redirect to home/dashboard
+            window.location.href = '../index.html';
+        } else {
+            alert('Sign up failed: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(err => {
+        console.error('Error during signup:', err);
+        alert('Backend server offline. Please ensure the backend server is running.');
+    });
 });
 
 // Close terms overlay if clicking outside the modal card
@@ -128,7 +132,7 @@ googleDemoModal.addEventListener('click', (e) => {
     }
 });
 
-submitDemoEmailBtn.addEventListener('click', () => {
+submitDemoEmailBtn.addEventListener('click', async () => {
     const email = demoEmailInput.value.trim();
     
     if (email === "") {
@@ -136,17 +140,30 @@ submitDemoEmailBtn.addEventListener('click', () => {
         return;
     }
 
-    alert(`JSON Output Generated:\n\n{\n  "email": "${email}",\n  "status": "Verified"\n}\n\nProceeding to Dashboard...`);
-    
-    googleDemoModal.classList.remove('active');
-    
-    // Also save simple user details
-    localStorage.setItem('currentUser', JSON.stringify({
-        name: "Google User",
-        email: email,
-        agreedToTerms: true,
-        signupDate: new Date().toISOString()
-    }));
+    try {
+        const response = await fetch('http://localhost:5000/api/login_with_google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+        });
 
-    window.location.href = '../index.html';
+        const data = await response.json();
+        if (response.ok) {
+            alert(`Login successful! Welcome ${data.user?.name || 'Google User'}`);
+            localStorage.setItem('currentUser', JSON.stringify({
+                name: data.user?.name || 'Google User',
+                email: email,
+                agreedToTerms: true,
+                signupDate: new Date().toISOString()
+            }));
+            
+            googleDemoModal.classList.remove('active');
+            window.location.href = '../index.html';
+        } else {
+            alert('Google Login failed: ' + (data.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Backend server offline. Please ensure the backend server is running.');
+    }
 });

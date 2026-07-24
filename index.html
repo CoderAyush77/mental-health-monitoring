@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.documentElement.classList.add('dark-mode');
@@ -133,86 +134,20 @@
 
                 <section class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Mood Trend (This Week)</h2>
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 class="card-title">Stress Trend (This Week)</h2>
+                            <div class="chart-legend" style="display: flex; gap: 12px; font-size: 0.75rem; color: #4a5568; margin-top: 5px;">
+                                <span class="legend-item" style="display: flex; align-items: center; gap: 4px;"><span class="dot dot-green" style="width: 8px; height: 8px; border-radius: 50%; background-color: #38a169;"></span> Voice</span>
+                                <span class="legend-item" style="display: flex; align-items: center; gap: 4px;"><span class="dot dot-purple" style="width: 8px; height: 8px; border-radius: 50%; background-color: #805ad5;"></span> Text</span>
+                            </div>
+                        </div>
                         <a href="pages/analytics.html"
                             style="text-decoration: none; color: #597858; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">View
                             Analytics <i class="fa-solid fa-arrow-right" style="font-size: 11px;"></i></a>
                     </div>
 
-                    <div class="chart-container">
-                        <svg class="chart-svg" viewBox="0 0 700 180" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="trendGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#597858" stop-opacity="0.3" />
-                                    <stop offset="100%" stop-color="#597858" stop-opacity="0.0" />
-                                </linearGradient>
-                            </defs>
-
-                            <line x1="0" y1="0" x2="700" y2="0" stroke="#f0f0f0" stroke-width="1" />
-                            <line x1="0" y1="45" x2="700" y2="45" stroke="#f0f0f0" stroke-width="1" />
-                            <line x1="0" y1="90" x2="700" y2="90" stroke="#f0f0f0" stroke-width="1" />
-                            <line x1="0" y1="135" x2="700" y2="135" stroke="#f0f0f0" stroke-width="1" />
-                            <line x1="0" y1="180" x2="700" y2="180" stroke="#f0f0f0" stroke-width="1" />
-
-                            <path d="M 35,110 L 140,95 L 245,60 L 350,75 L 455,30 L 560,15 L 665,0 L 665,180 L 35,180 Z"
-                                fill="url(#trendGradient)" />
-
-                            <path d="M 35,110 L 140,95 L 245,60 L 350,75 L 455,30 L 560,15 L 665,0" fill="none"
-                                stroke="#597858" stroke-width="3" />
-
-                            <circle cx="35" cy="110" r="4" fill="#597858" />
-                            <text x="35" y="95" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">55</text>
-
-                            <circle cx="140" cy="95" r="4" fill="#597858" />
-                            <text x="140" y="80" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">60</text>
-
-                            <circle cx="245" cy="60" r="4" fill="#597858" />
-                            <text x="245" y="45" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">70</text>
-
-                            <circle cx="350" cy="75" r="4" fill="#597858" />
-                            <text x="350" y="60" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">65</text>
-
-                            <circle cx="455" cy="30" r="4" fill="#597858" />
-                            <text x="455" y="15" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">80</text>
-
-                            <circle cx="560" cy="15" r="4" fill="#597858" />
-                            <text x="560" y="0" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">85</text>
-
-                            <circle cx="665" cy="0" r="4" fill="#597858" />
-                            <text x="665" y="-15" text-anchor="middle" font-size="12" fill="#555"
-                                font-weight="600">90</text>
-                        </svg>
-
-                        <div class="chart-axis">
-                            <span>Mon</span>
-                            <span>Tue</span>
-                            <span>Wed</span>
-                            <span>Thu</span>
-                            <span>Fri</span>
-                            <span>Sat</span>
-                            <span>Sun</span>
-                        </div>
-                    </div>
-
-                    <div class="trend-stats">
-                        <div class="stat-box">
-                            <span class="label">Average Mood</span>
-                            <div class="value">72 <span class="sub">Good</span></div>
-                        </div>
-                        <div class="stat-box">
-                            <span class="label">Best Day</span>
-                            <div class="value">Sunday <span class="sub">90 ⭐</span></div>
-                        </div>
-                        <div class="stat-box">
-                            <span class="label">Improvement</span>
-                            <div class="value highlight">+35% <span class="sub">vs last week 📈</span></div>
-                        </div>
+                    <div class="chart-container" style="height: 250px; position: relative; margin-top: 20px;">
+                        <canvas id="dashboardStressTrendLine"></canvas>
                     </div>
                 </section>
 
