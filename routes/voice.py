@@ -6,7 +6,8 @@ from utils.voice_predictor import evaluate_voice_audio # Import your PyTorch scr
 voice_bp = Blueprint('voice', __name__)
 
 # 1. CREATE ROUTE: Triggered when user submits a voice reflection
-@voice_bp.route('/api/voice/create', methods=['POST'])
+# FIX: Removed '/api/voice' because app.py already adds it!
+@voice_bp.route('/create', methods=['POST'])
 def save_voice_reflection():
     # We expect a file and form data, NOT standard JSON
     email = request.form.get('email')
@@ -35,10 +36,9 @@ def save_voice_reflection():
         "email": email,
         "content": encrypted_content,
         "tone_analyzer_metrics": {
+            # FIX: Cleaned up to only include the 3 real metrics!
             "confidence": int(tone_metrics.get('confidence', 0)),
-            "energy": int(tone_metrics.get('energy', 0)),
             "stress_level": int(tone_metrics.get('stress_level', 0)),
-            "speech_pace": int(tone_metrics.get('speech_pace', 0)),
             "positivity": int(tone_metrics.get('positivity', 0))
         },
         "overall_emotion_state": overall_emotion,
@@ -56,7 +56,8 @@ def save_voice_reflection():
 
 
 # 2. GET ROUTE: Fetch past voice reflections for the analytics/history tab
-@voice_bp.route('/api/voice/<email>', methods=['GET'])
+# FIX: Removed '/api/voice' here too!
+@voice_bp.route('/<email>', methods=['GET'])
 def get_voice_history(email):
     entries = list(voice_collection.find({"email": email}).sort("time_of_creation", -1))
     

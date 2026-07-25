@@ -10,12 +10,13 @@ from routes.analytics import analytics_bp  # <-- ADDED THIS
 app = Flask(__name__)
 CORS(app)
 
-app.register_blueprint(auth_bp)
-app.register_blueprint(settings_bp)
-app.register_blueprint(journal_bp)
-app.register_blueprint(dashboard_bp)
-app.register_blueprint(voice_bp)
-app.register_blueprint(analytics_bp)       # <-- ADDED THIS
+# Replace your blueprint registrations with this:
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(settings_bp, url_prefix='/api/settings')
+app.register_blueprint(journal_bp, url_prefix='/api/journal')
+app.register_blueprint(dashboard_bp, url_prefix='/api/dashboard')
+app.register_blueprint(voice_bp, url_prefix='/api/voice')
+app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
 
 @app.route('/')
 def home():

@@ -1,89 +1,80 @@
-import os
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request, jsonify
 from datetime import datetime, timezone
-from database import journals_collection
-from cryptography.fernet import Fernet
-from dotenv import load_dotenv
-
-# 1. IMPORT THE NEW BERT PREDICTOR
+# Ensure this matches exactly how you export these from database.py!
+from database import db, cipher_suite 
 from utils.predictor import evaluate_journal_stress
-
-# Crack open the .env vault
-load_dotenv()
 
 journal_bp = Blueprint('journal', __name__)
 
-# Securely grab the key from the vault and convert it to bytes
-SECRET_KEY = os.getenv("FERNET_SECRET_KEY").encode()
-cipher_suite = Fernet(SECRET_KEY)
-
-@journal_bp.route('/api/journal/create', methods=['POST'])
-def create_entry():
-    data = request.get_json()
-
-    email = data.get('email')
-    title = data.get('title')
-    content = data.get('content')
-
-    if not email or not title or not content:
-        return jsonify({"error": "Please fill up the fields properly"}), 400
-    
-    # 2. NEW AI PREDICTION STEP (Runs on plain text BEFORE encryption) 
-    # Extracts the 4-tier stress level and the 7 BERT emotion probabilities
-    stress_level, raw_emotions = evaluate_journal_stress(content)
-    
+@journal_bp.route('/create', methods=['POST'])
+def create_journal():
     try:
-        encrypted_title = cipher_suite.encrypt(title.encode()).decode()
-        encrypted_content = cipher_suite.encrypt(content.encode()).decode()
-    except Exception as e:
-        return jsonify({"error": "Security encryption failed. Entry aborted."}), 500
-    
-    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        data = request.get_json()
+        email = data.get('email')
+        title = data.get('title', 'Untitled')
+        content = data.get('content')
 
-    # 3. UPDATED DATABASE SCHEMA
-    new_entry = {
-        "email": email,
-        "title": encrypted_title,
-        "content": encrypted_content,
-        "stress_level": stress_level,        # Used by the graphs (e.g., 'Low', 'High')
-        "raw_emotion_scores": raw_emotions,  # Used by the graphs to calculate exact Mood %
-        "date": today_str,               
-        "time_of_creation": datetime.now(timezone.utc)
-    }
+        if not email or not content:
+            return jsonify({"error": "Email and content are required"}), 400
 
-    journals_collection.insert_one(new_entry)
+        # 1. Run the ML Prediction (Chunking + BERT + Classifier)
+        stress_level, emotions = evaluate_journal_stress(content)
 
-    return jsonify({
-        "message": "Entry created successfully! Daily task cleared.",
-        "stress_prediction": stress_level
-    }), 201
+        # 2. Encrypt the content before saving to the database
+        encrypted_content = cipher_suite.encrypt(content.encode('utf-8'))
 
-
-@journal_bp.route('/api/journal/<email>', methods=['GET'])
-def get_entries(email):
-    # Fetch and sort by newest first
-    entries = list(journals_collection.find({"email": email}).sort("time_of_creation", -1))
-
-    for entry in entries:
-        # Fix the MongoDB ID trap
-        entry['_id'] = str(entry['_id'])
+        # 3. Save to MongoDB
+        journal_entry = {
+            "email": email,
+            "title": title,
+            "content": encrypted_content, 
+            "stress_level": stress_level,
+            "emotions": emotions,  # Saving the full dictionary to the DB
+            "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "time_of_creation": datetime.now(timezone.utc).strftime("%H:%M:%S")
+        }
         
-        try:
-            # Unlock the text inside the secure back room (RAM)
-            decrypted_title = cipher_suite.decrypt(entry['title'].encode()).decode()
-            decrypted_content = cipher_suite.decrypt(entry['content'].encode()).decode()
-            
-            # Reassign the readable text to send to the React frontend
-            entry['title'] = decrypted_title
-            entry['content'] = decrypted_content
+        # NOTE: If your collection is named differently (e.g., db.journal_collection), update this line!
+        db.journals.insert_one(journal_entry)
 
-            # --- THE ML PROOF INTERCEPTOR ---
-            print("\n=== 🔒 SECURE ROOM (RAM) 🔒 ===")
-            print(f"Feeding this exact text to the ML Model: '{decrypted_content}'")
-            print("=================================\n")
+        # 4. Return the exact JSON response the frontend needs
+        return jsonify({
+            "message": "Journal saved successfully",
+            "stress_prediction": stress_level,
+            "emotions": emotions
+        }), 201
 
-        except Exception:
-            # Safety net for old/unencrypted data
-            pass
+    except Exception as e:
+        print(f"Error creating journal: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
-    return jsonify({"journals": entries}), 200
+@journal_bp.route('/<email>', methods=['GET'])
+def get_journals(email):
+    try:
+        # Fetch user's journals from the database
+        journals = list(db.journals.find({"email": email}))
+        
+        journal_list = []
+        for j in journals:
+            # Decrypt the content to send back to the frontend safely
+            try:
+                decrypted_content = cipher_suite.decrypt(j['content']).decode('utf-8')
+            except Exception:
+                decrypted_content = "Error decrypting content."
+
+            journal_list.append({
+                "_id": str(j['_id']),
+                "email": j.get('email'),
+                "title": j.get('title'),
+                "content": decrypted_content,
+                "stress_level": j.get('stress_level'),
+                "emotions": j.get('emotions', {}), # Safely retrieve emotions
+                "date": j.get('date'),
+                "time_of_creation": j.get('time_of_creation')
+            })
+
+        return jsonify({"journals": journal_list}), 200
+
+    except Exception as e:
+        print(f"Error fetching journals: {e}")
+        return jsonify({"error": "Internal server error"}), 500
