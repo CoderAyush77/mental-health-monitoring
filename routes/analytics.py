@@ -1,109 +1,164 @@
-# routes/analytics.py (BERT UPDATE)
 from flask import Blueprint, jsonify
 from datetime import datetime, timedelta, timezone
-from database import journals_collection
+# FIX 1: Added the 's' to journals_collection here!
+from database import journals_collection, voice_collection
 
 analytics_bp = Blueprint('analytics', __name__)
 
-def convert_bert_to_mood(stress_level, raw_emotions=None):
-    """
-    Translates the BERT & Logistic Regression outputs into a 0-100 Mood Score.
-    """
-    # 1. Primary Method: Use BERT's exact emotion probabilities if they exist
-    if raw_emotions and 'joy' in raw_emotions and 'sadness' in raw_emotions:
-        # Example formula: Baseline 50 + Joy% - Sadness% - Fear%
-        joy = raw_emotions.get('joy', 0) * 100
-        sadness = raw_emotions.get('sadness', 0) * 100
-        fear = raw_emotions.get('fear', 0) * 100
-        
-        calculated_mood = 50 + joy - (sadness * 0.5) - (fear * 0.5)
-        # Ensure it stays within 0 to 100 bounds
-        return int(max(0, min(100, calculated_mood)))
+def map_stress(level, is_text=True):
+    """Converts string stress levels to the UI's required integer map."""
+    if not level: return None
+    level = str(level).lower()
+    if 'extreme' in level: return 4 if is_text else 3
+    if 'high' in level: return 3
+    if 'medium' in level or 'moderate' in level: return 2
+    if 'low' in level: return 1
+    return None
 
-    # 2. Fallback Method: Map the Logistic Regression stress tier
-    stress_clean = str(stress_level).strip().lower()
-    mapping = {
-        "low": 85,       # Low stress = Great mood!
-        "medium": 65,
-        "high": 40,
-        "extreme": 15
-    }
-    return mapping.get(stress_clean, 50) 
-
-@analytics_bp.route('/api/analytics/<email>', methods=['GET'])
-def get_journal_analytics(email):
-    text_journals = list(journals_collection.find({"email": email}))
-    
-    if not text_journals:
-        return jsonify({"message": "No journal data available yet", "empty": True}), 200
-
-    processed_data = []
-    for entry in text_journals:
-        try:
-            entry_date = datetime.strptime(entry['date'], "%Y-%m-%d").date()
-            
-            # --- THE BERT CHANGE IS HERE ---
-            # Extract the new Logistic Regression tier (instead of ai_mood)
-            ml_stress = entry.get('stress_level', 'medium') 
-            
-            # Extract the 7 raw emotion metrics outputted by BERT (if saved)
-            bert_emotions = entry.get('raw_emotion_scores', {})
-            
-            # Calculate the final graph metric
-            mood_score = convert_bert_to_mood(ml_stress, bert_emotions)
-            # -------------------------------
-            
-            processed_data.append({
-                "date": entry_date,
-                "mood_score": mood_score,
-                "weekday": entry_date.strftime("%A")
-            })
-        except Exception as e:
-            continue
-
-    if not processed_data:
-        return jsonify({"error": "Data formatting error"}), 500
-
-    # (The rest of the time-series aggregation math remains exactly the same!)
-    total_entries = len(processed_data)
-    average_mood = int(sum(item['mood_score'] for item in processed_data) / total_entries)
-    
-    day_scores = {}
-    day_counts = {}
-    for item in processed_data:
-        day = item['weekday']
-        day_scores[day] = day_scores.get(day, 0) + item['mood_score']
-        day_counts[day] = day_counts.get(day, 0) + 1
-        
-    best_day = "None"
-    if day_scores:
-        avg_day_scores = {day: (day_scores[day] / day_counts[day]) for day in day_scores}
-        best_day = max(avg_day_scores, key=avg_day_scores.get)
-
-    weekly_trend = {"Mon": 0, "Tue": 0, "Wed": 0, "Thu": 0, "Fri": 0, "Sat": 0, "Sun": 0}
-    today = datetime.now(timezone.utc).date()
-    seven_days_ago = today - timedelta(days=7)
-    
-    recent_entries = [d for d in processed_data if d['date'] >= seven_days_ago]
-    
-    for entry in recent_entries:
-        short_day = entry['weekday'][:3] 
-        weekly_trend[short_day] = entry['mood_score'] 
-
-    week_averages = {"Week 1": 0, "Week 2": 0, "Week 3": 0, "Week 4": 0}
-    week_averages["Week 4"] = average_mood 
-    week_averages["Week 3"] = max(average_mood - 5, 0) 
-    week_averages["Week 2"] = min(average_mood + 8, 100)
-    week_averages["Week 1"] = max(average_mood - 12, 0)
-
-    return jsonify({
-        "summary": {
-            "average_mood_percentage": average_mood,
-            "total_journals": total_entries,
-            "best_mood_day": best_day
-        },
-        "graphs": {
-            "line_chart_trend": list(weekly_trend.values()), 
-            "bar_chart_averages": list(week_averages.values())
+def generate_recommendation(stress_value, is_text=True):
+    """Generates standard UI recommendations based on stress level."""
+    if stress_value and stress_value >= 3:
+        return {
+            "icon": "fa-heart",
+            "text1": "High stress detected.",
+            "text2": "Please prioritize self-care today."
         }
-    }), 200
+    if is_text:
+        return {
+            "icon": "fa-sun",
+            "text1": "Your tone is balanced.",
+            "text2": "Keep observing your thoughts."
+        }
+    return {
+        "icon": "fa-bullhorn",
+        "text1": "Your voice shows moderate positivity.",
+        "text2": "Keep expressing yourself!"
+    }
+
+@analytics_bp.route('/<email>', methods=['GET'])
+def get_analytics(email):
+    # FIX 2: Added the 's' to journals_collection here!
+    text_entries = list(journals_collection.find({"email": email}).sort("time_of_creation", -1))
+    voice_entries = list(voice_collection.find({"email": email}).sort("time_of_creation", -1))
+
+    # 2. Process Summary Stats
+    highest_stress_text = "Low"
+    highest_stress_date = "N/A"
+    highest_stress_val = 0
+    
+    for entry in text_entries:
+        val = map_stress(entry.get('stress_level'), is_text=True)
+        if val and val > highest_stress_val:
+            highest_stress_val = val
+            highest_stress_text = entry.get('stress_level', 'Extreme').capitalize()
+            # Try to format the date if available
+            date_str = entry.get('date', '')
+            try:
+                dt = datetime.strptime(date_str, "%Y-%m-%d")
+                highest_stress_date = dt.strftime("%b %d, %Y")
+            except:
+                highest_stress_date = date_str
+
+    summary = {
+        "total_entries": len(text_entries),
+        "voice_entries": len(voice_entries),
+        "highest_stress_text": highest_stress_text,
+        "highest_stress_date": highest_stress_date
+    }
+
+    # 3. Calculate 7-Day Trend Arrays
+    today = datetime.now(timezone.utc).date()
+    trend_labels = []
+    text_data = []
+    voice_data = []
+    
+    # Map entries by date string for easy lookup
+    text_by_date = {e.get('date'): map_stress(e.get('stress_level'), True) for e in text_entries if e.get('date')}
+    voice_by_date = {e.get('date'): map_stress(e.get('overall_emotion_state'), False) for e in voice_entries if e.get('date')}
+
+    for i in range(6, -1, -1):
+        target_date = today - timedelta(days=i)
+        target_str = target_date.strftime("%Y-%m-%d")
+        
+        trend_labels.append(target_date.strftime("%b %d"))
+        text_data.append(text_by_date.get(target_str, None))
+        voice_data.append(voice_by_date.get(target_str, None))
+
+    stress_trend_7_days = {
+        "labels": trend_labels,
+        "text_data": text_data,
+        "voice_data": voice_data
+    }
+
+    # 4. Process Detailed Analysis and History Lists
+    history_text, history_voice = [], []
+    detailed_text, detailed_voice = {}, {}
+
+    # Process Text History
+    for entry in text_entries:
+        date_str = entry.get('date', '')
+        if not date_str: continue
+        
+        try:
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            entry_id = dt.strftime("%b%d").lower()
+            label = dt.strftime("%b %d, %Y")
+        except:
+            entry_id = date_str.replace("-", "")
+            label = date_str
+
+        # Only add if we haven't processed this day yet (to avoid duplicate IDs in dropdown)
+        if entry_id not in detailed_text:
+            history_text.append({"id": entry_id, "label": label})
+            
+            stress_lvl = entry.get('stress_level', 'Medium').capitalize()
+            detailed_text[entry_id] = {
+                "metrics": {
+                    "stress_level": stress_lvl,
+                    "polarity": "Positive" if entry.get('sentiment_score', 0) > 0 else "Negative",
+                    "subjectivity": "Highly Personal"
+                },
+                "donut_chart": [45, 30, 25], # Hardcoded fallback per UI contract
+                "recommendation": generate_recommendation(map_stress(stress_lvl, True), True)
+            }
+
+    # Process Voice History
+    for entry in voice_entries:
+        date_str = entry.get('date', '')
+        if not date_str: continue
+        
+        try:
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            entry_id = dt.strftime("%b%d").lower()
+            label = dt.strftime("%b %d, %Y")
+        except:
+            entry_id = date_str.replace("-", "")
+            label = date_str
+
+        if entry_id not in detailed_voice:
+            history_voice.append({"id": entry_id, "label": label})
+            
+            metrics = entry.get('tone_analyzer_metrics', {})
+            stress_lvl = entry.get('overall_emotion_state', 'Moderate').capitalize()
+            detailed_voice[entry_id] = {
+                "metrics": {
+                    "stress_level": stress_lvl,
+                    "confidence": f"{metrics.get('confidence', 0)}%",
+                    "positivity": f"{metrics.get('positivity', 0)}/100"
+                },
+                "recommendation": generate_recommendation(map_stress(stress_lvl, False), False)
+            }
+
+    # Assemble Final Payload
+    payload = {
+        "summary": summary,
+        "stress_trend_7_days": stress_trend_7_days,
+        "history_lists": {
+            "text": history_text,
+            "voice": history_voice
+        },
+        "detailed_text_analysis": detailed_text,
+        "detailed_voice_analysis": detailed_voice
+    }
+
+    return jsonify(payload), 200
