@@ -205,8 +205,6 @@ def get_analysis(email):
         payload = {
             "type": "text",
             "stress": entry.get('stress_level', 'Medium').capitalize(),
-            # RESTORED CONFIDENCE HERE
-            "confidence": round(float(entry.get('sentiment_score', 0) * 100), 2) if entry.get('sentiment_score') else 0,
             "emotions": entry.get('emotions', {
                 "anger": 0, "disgust": 0, "fear": 0, "joy": 0, "neutral": 0, "sadness": 0, "surprise": 0
             })
