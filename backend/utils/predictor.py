@@ -1,4 +1,5 @@
 # utils/predictor.py
+import os
 import joblib
 import torch
 import re
@@ -15,10 +16,13 @@ DEVICE = torch.device("cpu") # Forcing CPU to keep your Flask server stable
 
 # 1. LOAD THE .PKL FILES INTO MEMORY
 try:
-    # Load everything using your exact absolute paths
-    bert_config = joblib.load(r"C:\Users\APLUS\Desktop\Backend\ml_models\bert_model_name.pkl")
-    scaler = joblib.load(r"C:\Users\APLUS\Desktop\Backend\ml_models\feature_scaler.pkl")
-    stress_classifier = joblib.load(r"C:\Users\APLUS\Desktop\Backend\ml_models\stress_model_1.pkl")
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    model_dir = os.path.join(base_dir, 'ml_model')
+    
+    # Load everything using dynamic relative paths
+    bert_config = joblib.load(os.path.join(model_dir, 'bert_model_name.pkl'))
+    scaler = joblib.load(os.path.join(model_dir, 'feature_scaler.pkl'))
+    stress_classifier = joblib.load(os.path.join(model_dir, 'stress_model.pkl'))
     
     MODEL_NAME = bert_config.get("bert_model", "j-hartmann/emotion-english-distilroberta-base")
 
@@ -31,7 +35,7 @@ try:
     EMOTION_LABELS = [bert_model.config.id2label[i] for i in range(bert_model.config.num_labels)]
     
 except Exception as e:
-    print(f"⚠️ CRITICAL: Could not load ML models. Error: {e}")
+    print(f"CRITICAL: Could not load ML models. Error: {e}")
 
 # --- NEW CHUNKING HELPER FUNCTIONS ---
 def split_into_sentences(text):
