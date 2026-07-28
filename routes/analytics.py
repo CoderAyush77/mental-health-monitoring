@@ -44,13 +44,13 @@ def get_voice_recommendation(stress_level, positivity_score):
 
     if 'extreme' in stress:
         return {
-            "line1": "Your voice analysis suggests elevated stress levels.",
+            "line1": "Your voice indicates very high stress.",
             "line2": "Consider taking a break or speaking with someone you trust."
         }
     elif 'high' in stress:
         if pos < 40:
             return {
-                "line1": "Your voice analysis suggests high stress with lower positivity.",
+                "line1": "High stress and low positivity detected.",
                 "line2": "Try relaxation exercises and avoid overexertion."
             }
         else:
@@ -81,7 +81,6 @@ def get_voice_recommendation(stress_level, positivity_score):
                 "line2": "Continue monitoring your wellbeing and maintaining balance."
             }
     
-    # Safe fallback just in case
     return {
         "line1": "The analysis indicates a moderate emotional state.",
         "line2": "Continue monitoring your wellbeing."
@@ -95,7 +94,7 @@ def get_dashboard(email):
     text_entries = list(journals_collection.find({"email": email}).sort("time_of_creation", -1))
     voice_entries = list(voice_collection.find({"email": email}).sort("time_of_creation", -1))
 
-    highest_stress_text = "N/A"
+    highest_stress_text = "Low"
     highest_stress_date = "N/A"
     highest_stress_val = 0
     highest_dt = datetime.min
@@ -205,6 +204,8 @@ def get_analysis(email):
         payload = {
             "type": "text",
             "stress": entry.get('stress_level', 'Medium').capitalize(),
+            # RESTORED CONFIDENCE HERE
+            "confidence": round(float(entry.get('sentiment_score', 0) * 100), 2) if entry.get('sentiment_score') else 0,
             "emotions": entry.get('emotions', {
                 "anger": 0, "disgust": 0, "fear": 0, "joy": 0, "neutral": 0, "sadness": 0, "surprise": 0
             })
@@ -223,6 +224,8 @@ def get_analysis(email):
         payload = {
             "type": "voice",
             "stress": stress_level,
+            # RESTORED CONFIDENCE HERE
+            "confidence": metrics.get('confidence', 0),
             "positivity": positivity,
             "recommendation": get_voice_recommendation(stress_level, positivity)
         }
