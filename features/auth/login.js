@@ -28,7 +28,7 @@
                         name: data.user?.name || 'User',
                         email
                     }));
-                    window.location.href = '../index.html';
+                    window.location.href = '../../index.html';
                 } else {
                     alert('Login failed: ' + (data.message || 'Invalid credentials'));
                 }
@@ -83,7 +83,7 @@
                     }));
                     
                     googleDemoModal.classList.remove('active');
-                    window.location.href = '../index.html';
+                    window.location.href = '../../index.html';
                 } else {
                     alert('Google Login failed: ' + (data.message || 'Unknown error'));
                 }

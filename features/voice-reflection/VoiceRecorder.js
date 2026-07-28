@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         alert('Your voice reflection has been saved to the database (simulated with local storage)!');
-        window.location.href = '../index.html';
+        window.location.href = '../../index.html';
     }
     
     // --- UI Helpers ---

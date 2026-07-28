@@ -794,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('tempJournalContent', `Transcript:\n"${transcript}"\n\nAI Analysis:\n${reason}`);
         
         // Redirect to Journal
-        window.location.href = 'journal.html';
+        window.location.href = '../journal/journal.html';
     }
 
     function handleSaveToDatabase() {

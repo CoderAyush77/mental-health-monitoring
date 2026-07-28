@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../auth/login.css">
     <script>
         if (localStorage.getItem('darkMode') === 'enabled') {
             document.documentElement.classList.add('dark-mode');
@@ -15,16 +15,16 @@
     </script>
 </head>
 <body>
-    <img src="../assets/images/pot.png" class="bg-pot" alt="Background pot">
+    <img src="../../assets/images/pot.png" class="bg-pot" alt="Background pot">
     
     <div class="login-card" style="height: auto; min-height: 600px; margin: 20px 0;">
         <div class="left-panel" style="min-height: 600px;">
             <div class="logo">
-                <img src="../assets/images/logo2.png" class="logo" alt="SereneMind Logo">
+                <img src="../../assets/images/logo2.png" class="logo" alt="SereneMind Logo">
             </div>
             <h3>Your personal space for mental well-being and clarity.</h3>
             
-            <img src="../assets/images/meditation.png" class="illustration" alt="Meditation Illustration">
+            <img src="../../assets/images/meditation.png" class="illustration" alt="Meditation Illustration">
 
             <div class="bottom-curve"></div>
             
@@ -105,7 +105,7 @@
             </form>
 
             <div class="signup-text">
-                Already have an account? <a href="./login.html">Login</a>
+                Already have an account? <a href="./../auth/login.html">Login</a>
             </div>
         </div>
     </div>
@@ -154,7 +154,7 @@
         </div>
     </div>
 
-    <!-- Google Login Email Entry Modal Overlay (Maintains parity with login.html) -->
+    <!-- Google Login Email Entry Modal Overlay (Maintains parity with ../auth/login.html) -->
     <div class="modal-overlay" id="googleDemoModal">
         <div class="modal-card">
             <h3>Enter Google Email</h3>
@@ -164,8 +164,8 @@
         </div>
     </div>
 
-    <img src="../assets/images/plants.png" class="bg-plants" alt="Background plants">
+    <img src="../../assets/images/plants.png" class="bg-plants" alt="Background plants">
     
-    <script src="../assets/js/signup.js"></script>
+    <script src="../auth/signup.js"></script>
 </body>
 </html>

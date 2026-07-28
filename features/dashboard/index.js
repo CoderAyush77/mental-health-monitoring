@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     logoutBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'pages/login.html';
+            window.location.href = 'features/auth/login.html';
         });
     });
 
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="no-history">
                             <div class="no-history-icon">📖</div>
                             <p>No journal entries logged yet.</p>
-                            <a href="pages/journal.html" class="no-history-btn">
+                            <a href="features/journal/journal.html" class="no-history-btn">
                                 <i class="fa-solid fa-pen-to-square"></i> Write Your First Entry
                             </a>
                         </div>
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const date = escapeHtml(entry.date || 'Today');
                         
                         return `
-                            <a href="pages/journal.html" class="history-card-link">
+                            <a href="features/journal/journal.html" class="history-card-link">
                                 <div class="history-item">
                                     <div class="history-header">
                                         <h4 class="history-title">${title}</h4>

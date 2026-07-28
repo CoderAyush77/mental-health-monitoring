@@ -3,3 +3,7 @@ backend/__pycache__/
 backend/uploads/
 .env
 *.log
+
+*.pt
+*.pkl
+*.crdownload

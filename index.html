@@ -7,7 +7,7 @@
     <title>SereneMind Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="features/dashboard/index.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         if (localStorage.getItem('darkMode') === 'enabled') {
@@ -29,13 +29,13 @@
 
             <nav class="nav">
                 <a href="index.html" class="active"><i class="fa-solid fa-chart-column"></i> Dashboard</a>
-                <a href="pages/journal.html"><i class="fa-solid fa-book-open"></i> Journal</a>
-                <a href="pages/voice-reflection.html"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection</a>
-                <a href="pages/chatbot.html"><i class="fa-regular fa-comment-dots"></i> Chatbot</a>
-                <a href="pages/analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
-                <a href="pages/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
-                <a href="pages/help.html"><i class="fa-solid fa-circle-question"></i> Help</a>
-                <a href="pages/login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                <a href="features/journal/journal.html"><i class="fa-solid fa-book-open"></i> Journal</a>
+                <a href="features/voice-reflection/voice-reflection.html"><i class="fa-solid fa-microphone-lines"></i> Voice Reflection</a>
+                <a href="features/chatbot/chatbot.html"><i class="fa-regular fa-comment-dots"></i> Chatbot</a>
+                <a href="features/analytics/analytics.html"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+                <a href="features/settings/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="features/help/help.html"><i class="fa-solid fa-circle-question"></i> Help</a>
+                <a href="features/auth/login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
             </nav>
 
             <div class="meditation-card">
@@ -69,7 +69,7 @@
                             <p>7 Days</p>
                         </div>
                     </div>
-                    <a href="pages/settings.html" style="text-decoration: none; color: inherit; display: block;">
+                    <a href="features/settings/settings.html" style="text-decoration: none; color: inherit; display: block;">
                         <div class="user">
                             <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
                             <div class="user-info">
@@ -141,7 +141,7 @@
                                 <span class="legend-item" style="display: flex; align-items: center; gap: 4px;"><span class="dot dot-purple" style="width: 8px; height: 8px; border-radius: 50%; background-color: #805ad5;"></span> Text</span>
                             </div>
                         </div>
-                        <a href="pages/analytics.html"
+                        <a href="features/analytics/analytics.html"
                             style="text-decoration: none; color: #597858; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">View
                             Analytics <i class="fa-solid fa-arrow-right" style="font-size: 11px;"></i></a>
                     </div>
@@ -156,7 +156,7 @@
             <section class="card journal-history-card" style="padding: 24px; margin-bottom: 24px;">
                 <div class="card-header" style="margin-bottom: 16px;">
                     <h2 class="card-title" style="font-size: 16px;">Journal History</h2>
-                    <a href="pages/journal.html" class="history-write-link"
+                    <a href="features/journal/journal.html" class="history-write-link"
                         style="text-decoration: none; color: var(--primary); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
                         Write Entry <i class="fa-solid fa-pen-to-square" style="font-size: 11px;"></i>
                     </a>
@@ -169,19 +169,19 @@
             <section class="card quick-tools-card" style="padding: 24px; margin-bottom: 24px;">
                 <h2 class="card-title" style="font-size: 16px; margin-bottom: 16px;">Quick Tools</h2>
                 <div class="quick-tools-list" style="display: flex; flex-direction: row; gap: 16px; overflow-x: auto;">
-                    <a href="pages/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                    <a href="features/breathing/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
                         <div class="qt-left"><i class="fa-solid fa-leaf"></i> Breathing Exercise</div>
                         <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-                    <a href="pages/meditation.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                    <a href="features/meditation/meditation.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
                         <div class="qt-left"><i class="fa-solid fa-spa"></i> Guided Meditation</div>
                         <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-                    <a href="pages/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                    <a href="features/breathing/breathing.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
                         <div class="qt-left"><i class="fa-regular fa-lightbulb"></i> Stress Relief Tips</div>
                         <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
-                    <a href="pages/journal.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
+                    <a href="features/journal/journal.html" class="quick-tool-btn" style="flex: 1; min-width: 200px;">
                         <div class="qt-left"><i class="fa-regular fa-note-sticky"></i> Mood Journal Prompts</div>
                         <i class="fa-solid fa-chevron-right qt-arrow"></i>
                     </a>
@@ -196,7 +196,7 @@
 
 
     <!-- JavaScript Interactions -->
-    <script src="assets/js/index.js"></script>
+    <script src="features/dashboard/index.js"></script>
 </body>
 
 </html>

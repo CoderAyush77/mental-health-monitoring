@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentUserStr = localStorage.getItem('currentUser');
     if (!currentUserStr) {
         alert("Please log in to use the journal.");
-        window.location.href = '../pages/login.html';
+        window.location.href = '../features/auth/login.html';
         return;
     }
     const email = JSON.parse(currentUserStr).email;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         if (contentInput) contentInput.value = '';
 
                         alert('Your journal entry has been created successfully!');
-                        window.location.href = '../index.html';
+                        window.location.href = '../../index.html';
                     } else {
                         alert('Failed to create journal entry: ' + (data.message || 'Unknown error'));
                     }

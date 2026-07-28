@@ -93,7 +93,7 @@ acceptTermsBtn.addEventListener('click', () => {
             alert(`Sign Up Successful!\n\nWelcome to SereneMind, ${nameVal}. Your mental health monitoring logs are end-to-end encrypted and completely secure.`);
             
             // Redirect to home/dashboard
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
         } else {
             alert('Sign up failed: ' + (data.message || 'Unknown error'));
         }
@@ -158,7 +158,7 @@ submitDemoEmailBtn.addEventListener('click', async () => {
             }));
             
             googleDemoModal.classList.remove('active');
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
         } else {
             alert('Google Login failed: ' + (data.message || 'Unknown error'));
         }

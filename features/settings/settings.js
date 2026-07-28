@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const currentUserStr = localStorage.getItem('currentUser');
     if (!currentUserStr) {
         alert("Please log in to access settings.");
-        window.location.href = 'login.html';
+        window.location.href = '../auth/login.html';
         return;
     }
     const email = JSON.parse(currentUserStr).email;
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (response.ok) {
                         alert("Account deleted successfully.");
                         localStorage.clear();
-                        window.location.href = 'login.html';
+                        window.location.href = '../auth/login.html';
                     } else {
                         const data = await response.json();
                         alert("Failed to delete account: " + (data.message || 'Incorrect password'));
