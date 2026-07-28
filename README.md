@@ -55,16 +55,24 @@ In today's fast-paced world, mental health monitoring is crucial. **SereneMind**
 
 ---
 
+##   Repository Structure
+
+The project has been restructured into a unified monorepo containing all components of the system:
+
+* `/frontend`: Contains the user interface, HTML/JS/CSS, and React components.
+* `/backend`: Contains the Flask API backend and routing logic.
+* `/ml_model`: Contains the machine learning scripts, Jupyter notebooks, and model files.
+
 ##   How to Run the Project Locally
 
-Because this phase of the project focuses on UI/UX and front-end development, no backend server setup is required.
+**Frontend:**
+Navigate to the `frontend/` directory and open `index.html` in any modern web browser.
 
-1. **Extract the Project:** Unzip the project folder containing the source files.
-2. **Directory Structure:** Ensure the following files are in the same folder:
-    * `index.html` (The main dashboard view)
-    * `logo.png` (The SereneMind logo)
-    * `plants.jpg` (The decorative background image)
-3. **Execution:** Double-click the `index.html` file to open the application in any modern web browser (Google Chrome, Mozilla Firefox, or Microsoft Edge).
+**Backend:**
+Navigate to the `backend/` directory, install dependencies (`pip install -r requirements.txt`), and run `python app.py` to start the Flask API.
+
+**Machine Learning:**
+Navigate to the `ml_model/` directory to access training scripts and notebooks. Note: large model files (`*.pt`, `*.pkl`) are excluded via `.gitignore` to maintain repository size.
 
 ---
 
