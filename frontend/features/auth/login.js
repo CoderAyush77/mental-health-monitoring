@@ -15,7 +15,7 @@
             const passValue = document.querySelector('#password').value;
 
             try {
-                const response = await fetch('http://localhost:5000/api/login', {
+                const response = await fetch('http://localhost:5000/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password: passValue }),
@@ -68,7 +68,7 @@
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/login_with_google', {
+                const response = await fetch('http://localhost:5000/api/auth/login_with_google', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email }),

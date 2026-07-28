@@ -6,7 +6,7 @@ from database import checkins_collection, journals_collection, users_collection
 dashboard_bp = Blueprint('dashboard', __name__)
 
 # API 1: STATUS CHECK (Tells Frontend whether to enable or lock the Check-In button)
-@dashboard_bp.route('/api/dashboard/checkin/status/<email>', methods=['GET'])
+@dashboard_bp.route('/checkin/status/<email>', methods=['GET'])
 def get_checkin_status(email):
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     
@@ -41,7 +41,7 @@ def get_checkin_status(email):
 
 
 # API 2: CONFIRM CHECK-IN (Increments the daily streak counter on click)
-@dashboard_bp.route('/api/dashboard/checkin/confirm', methods=['POST'])
+@dashboard_bp.route('/checkin/confirm', methods=['POST'])
 def confirm_daily_checkin():
     data = request.get_json()
     email = data.get('email')

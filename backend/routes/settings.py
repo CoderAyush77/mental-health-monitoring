@@ -4,7 +4,7 @@ from database import users_collection ,  journals_collection ,checkins_collectio
 
 settings_bp=Blueprint('settings',__name__)
 
-@settings_bp.route('/api/settings/<email>',methods=['GET'])
+@settings_bp.route('/<email>',methods=['GET'])
 def get_user_settings(email):
   user=users_collection.find_one({"email":email})
   if not user:
@@ -22,7 +22,7 @@ def get_user_settings(email):
   }),200
 
 #update user info and preferences
-@settings_bp.route('/api/settings/update',methods=['PUT'])
+@settings_bp.route('/update',methods=['PUT'])
 def update_profile():
   data=request.get_json()
   email=data.get('email') #to know whose account is this
@@ -45,7 +45,7 @@ def update_profile():
   return jsonify({"message":"profile has been updated successfully"}),200
 
 #API for changing the password
-@settings_bp.route('/api/settings/change-password',methods=['PUT'])
+@settings_bp.route('/change-password',methods=['PUT'])
 def change_password():
   data=request.get_json()
   email=data.get('email')
@@ -72,7 +72,7 @@ def change_password():
   return jsonify({"message":"Password updated successfully!"}),200
 
 #delete the user account
-@settings_bp.route('/api/settings/delete',methods=['DELETE'])
+@settings_bp.route('/delete',methods=['DELETE'])
 def delete():
   data=request.get_json()
   email=data.get('email')

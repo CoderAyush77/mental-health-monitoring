@@ -74,7 +74,7 @@ acceptTermsBtn.addEventListener('click', () => {
     // Close Modal
     termsOverlay.classList.remove('active');
 
-    fetch('http://localhost:5000/api/signup', {
+    fetch('http://localhost:5000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: nameVal, email: emailVal, password: passVal })
@@ -141,7 +141,7 @@ submitDemoEmailBtn.addEventListener('click', async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/login_with_google', {
+        const response = await fetch('http://localhost:5000/api/auth/login_with_google', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email }),

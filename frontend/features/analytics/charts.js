@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const API_BASE = `http://127.0.0.1:5000/analytics`;
+    const API_BASE = `http://127.0.0.1:5000/api/analytics`;
 
     // ==========================================
     // Header Date

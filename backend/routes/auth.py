@@ -9,7 +9,7 @@ from database import users_collection #importing the database collection
 #let's created an aunthenticatio department(blueprint) for the app
 auth_bp=Blueprint('auth',__name__) #handles signup, login, logout, forgot password
 
-@auth_bp.route('/api/signup', methods=['POST'])
+@auth_bp.route('/signup', methods=['POST'])
 def signup():
   data=request.get_json() #receives the data from the react & conerts to python dictionary
 
@@ -41,7 +41,7 @@ def signup():
 
   return jsonify({"message":"user account was created succesfuuly"}),201
 
-@auth_bp.route('/api/login',methods=['POST'])
+@auth_bp.route('/login',methods=['POST'])
 def login():
   data=request.get_json()
   email=data.get('email')
@@ -55,7 +55,7 @@ def login():
   else:
     return jsonify({"error":"Incorrect password"}),401
 
-@auth_bp.route('/api/login_with_google', methods=['POST'])
+@auth_bp.route('/login_with_google', methods=['POST'])
 def login_with_google():
   data = request.get_json()
   email = data.get('email')
