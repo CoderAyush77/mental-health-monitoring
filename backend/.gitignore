@@ -1,0 +1,19 @@
+﻿# Virtual Environment
+env/
+venv/
+
+# Secrets and Database Keys
+.env
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Massive ML Models (Prevents GitHub 100MB Crash!)
+ml_models/*.pt
+ml_models/*.pkl
+*.safetensors
+
+# Audio Test Files
+*.wav
+*.mp3
